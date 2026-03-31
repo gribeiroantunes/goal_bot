@@ -9,67 +9,51 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = -1003725207734
 
 
-# 🔥 converter horário da API → Brasil
-from datetime import datetime, timezone, timedelta
-
-
 def formatar_data_api(event_date_str):
     try:
-        if not event_date_str:
-            return "Horário indefinido"
-
-        # 🔥 corrige formato +0400 → +04:00
         if event_date_str[-3] != ":":
             event_date_str = event_date_str[:-2] + ":" + event_date_str[-2:]
 
         dt = datetime.fromisoformat(event_date_str)
-
         brasil = dt.astimezone(timezone(timedelta(hours=-3)))
 
         return brasil.strftime("%d/%m às %H:%M")
-
-    except Exception as e:
-        print("Erro ao converter:", event_date_str, e)
+    except:
         return "Horário indefinido"
 
-# 🔥 traduz mercados para linguagem simples
+
 def traduzir_mercado(m):
     mapa = {
         "Over 1.5": "Gols: Mais que 1.5",
         "Over 2.5": "Gols: Mais que 2.5",
         "Over 3.5": "Gols: Mais que 3.5",
-        "BTTS": "Ambos marcam"
+        "Under 2.5": "Gols: Menos que 2.5",
+        "BTTS": "Ambos marcam",
+        "No BTTS": "Ambos NÃO marcam"
     }
     return mapa.get(m, m)
 
 
+def filter_free(selections):
+    free = []
+    for s in selections:
+        if s["market"] in ["Over 1.5", "Over 2.5", "Over 3.5", "Under 2.5", "BTTS", "No BTTS"]:
+            if s["model_prob"] >= 0.60:
+                free.append(s)
+    return free[:7]
+
+
 def format_message(selections):
     msg = "📊 *OPORTUNIDADES DE GOLS DO DIA*\n\n"
-
-    msg += "💡 Dicas simples:\n"
-    msg += "👉 Foque apenas em gols\n"
-    msg += "👉 Use de 2% a 3% da banca\n\n"
-
-    count = 0
+    msg += "👉 Use 2% a 3% da banca\n\n"
 
     for s in selections:
-
-        # 🔥 só mercados de gols
-        if s["market"] not in ["Over 1.5", "Over 2.5", "Over 3.5", "BTTS"]:
-            continue
-
         msg += f"⚽ {s['fixture_name']}\n"
         msg += f"🕒 {formatar_data_api(s.get('event_date'))}\n"
         msg += f"👉 {traduzir_mercado(s['market'])}\n"
         msg += f"📊 Chance: {int(s['model_prob']*100)}%\n\n"
 
-        count += 1
-        if count >= 7:
-            break
-
-    msg += "💎 Quer sinais mais fortes?\n"
-    msg += "👉 Entre no VIP:\n"
-    msg += "https://t.me/+ckOVtoDxOItmMzUx"
+    msg += "💎 Entre no VIP:\nhttps://t.me/+ckOVtoDxOItmMzUx"
 
     return msg
 
@@ -82,10 +66,9 @@ async def main():
     data = merge_events_predictions(events, preds)
 
     selections = analyze_and_select(data)
+    free = filter_free(selections)
 
-    msg = format_message(selections)
-
-    await bot.send_message(CHANNEL_ID, msg, parse_mode="Markdown")
+    await bot.send_message(CHANNEL_ID, format_message(free), parse_mode="Markdown")
 
 
 if __name__ == "__main__":
