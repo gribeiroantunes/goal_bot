@@ -39,18 +39,56 @@ def traduzir_mercado(m):
 
 
 def filter_vip(selections, free):
-    free_keys = {(s["fixture_name"], s["market"]) for s in free}
     vip = []
 
-    for s in selections:
-        key = (s["fixture_name"], s["market"])
+    # 🔥 pega os melhores valores do FREE
+    max_free_prob = max([s["model_prob"] for s in free], default=0)
+    max_free_conf = max([s["confidence"] for s in free], default=0)
 
-        if key in free_keys:
+    for bet in selections:
+
+        # 🚫 não repetir FREE
+        if any(
+            bet["fixture_name"] == f["fixture_name"] and
+            bet["market"] == f["market"]
+            for f in free
+        ):
             continue
 
-        if s["model_prob"] >= 0.67 and s["confidence"] >= 70 and s["score"] >= 0.70:
-            s["stake_pct"] = 6
-            vip.append(s)
+        # 🔥 regra PRINCIPAL (VIP melhor que FREE)
+        if (
+            bet["model_prob"] >= max_free_prob + 0.02 and
+            bet["confidence"] >= max_free_conf and
+            bet["score"] >= 0.70
+        ):
+
+            # 🎯 stake inteligente
+            if bet["model_prob"] >= 0.75:
+                bet["stake_pct"] = 7
+            elif bet["model_prob"] >= 0.70:
+                bet["stake_pct"] = 6
+            else:
+                bet["stake_pct"] = 5
+
+            vip.append(bet)
+
+    # 🔥 fallback inteligente (sem quebrar regra)
+    if not vip:
+        sorted_sel = sorted(selections, key=lambda x: x["score"], reverse=True)
+
+        for bet in sorted_sel:
+            if not any(
+                bet["fixture_name"] == f["fixture_name"] and
+                bet["market"] == f["market"]
+                for f in free
+            ):
+                bet["stake_pct"] = 5
+                vip.append(bet)
+
+            if len(vip) >= 3:
+                break
+
+    return vip[:5]
 
     if not vip:
         for s in selections:
