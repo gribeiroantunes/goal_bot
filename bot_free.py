@@ -36,10 +36,12 @@ def traduzir_mercado(m):
 
 def filter_free(selections):
     free = []
+
     for s in selections:
         if s["market"] in ["Over 1.5", "Over 2.5", "Over 3.5", "Under 2.5", "BTTS", "No BTTS"]:
-            if s["model_prob"] >= 0.60:
+            if s["model_prob"] >= 0.60 and s["confidence"] >= 60:
                 free.append(s)
+
     return free[:7]
 
 
