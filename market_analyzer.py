@@ -3,66 +3,68 @@ import math
 
 logger = logging.getLogger("market_analyzer")
 
-# ---------------- CONFIG ----------------
-MIN_PROB = 0.55
-MIN_SCORE = 0.60
-MAX_DIVERGENCE = 0.15
-MIN_EV = 0.03
-# ----------------------------------------
+# ---------------- CONFIG (AJUSTADO) ----------------
+MIN_PROB = 0.52
+MIN_SCORE = 0.58
+MAX_DIVERGENCE = 0.20
+MIN_EV = 0.01
+# --------------------------------------------------
 
 MARKET_WEIGHTS = {
     "Over 1.5": 1.0,
-    "Over 2.5": 0.95,
-    "Over 3.5": 0.85,
-    "Under 2.5": 0.9,
-    "BTTS": 0.95,
-    "No BTTS": 0.9,
-    "1": 0.85,
-    "X": 0.75,
-    "2": 0.85,
+    "Over 2.5": 0.97,
+    "Over 3.5": 0.90,
+    "Under 2.5": 0.93,
+    "BTTS": 0.96,
+    "No BTTS": 0.92,
+    "1": 0.90,
+    "X": 0.80,
+    "2": 0.90,
 }
 
 
-# ---------- CORE MELHORADO ----------
+# ---------- CORE ----------
 
 def calibrate_prob(p):
     try:
         logit = math.log(p / (1 - p))
-        adjusted = 1 / (1 + math.exp(-0.85 * logit))
-        return max(0.01, min(adjusted, 0.99))
+        adjusted = 1 / (1 + math.exp(-0.7 * logit))
+        return max(0.05, min(adjusted, 0.95))
     except:
         return p
 
 
 def calculate_goal_trend(event):
-    home_avg = event.get("home_avg_goals_scored", 1.2)
-    away_avg = event.get("away_avg_goals_scored", 1.1)
-    home_conceded = event.get("home_avg_goals_conceded", 1.1)
-    away_conceded = event.get("away_avg_goals_conceded", 1.2)
+    home = event.get("home_avg_goals_scored", 1.3)
+    away = event.get("away_avg_goals_scored", 1.2)
+    conceded = (
+        event.get("home_avg_goals_conceded", 1.2) +
+        event.get("away_avg_goals_conceded", 1.3)
+    ) / 2
 
-    total = (home_avg + away_avg + home_conceded + away_conceded) / 4
+    trend = (home + away + conceded) / 3
 
-    return max(0.3, min(total / 3, 1))
+    return max(0.4, min(trend / 3, 0.75))
 
 
 def calculate_consistency(event):
-    home_var = event.get("home_goal_variance", 1.2)
-    away_var = event.get("away_goal_variance", 1.2)
+    var = (
+        event.get("home_goal_variance", 1.5) +
+        event.get("away_goal_variance", 1.5)
+    ) / 2
 
-    avg_var = (home_var + away_var) / 2
-
-    return max(0.3, min(1 - (avg_var / 4), 1))
+    return max(0.4, min(1 - (var / 5), 0.8))
 
 
 def calculate_volatility(event):
-    big = event.get("over_35_freq", 0.3)
-    btts = event.get("btts_freq", 0.5)
-
-    return max(0.1, min((big + btts) / 2, 1))
+    return (
+        event.get("btts_freq", 0.5) +
+        event.get("over_35_freq", 0.35)
+    ) / 2
 
 
 def build_final_prob(api_prob, trend):
-    return (0.7 * api_prob) + (0.3 * trend)
+    return (0.75 * api_prob) + (0.25 * trend)
 
 
 def build_confidence(api_conf, divergence, consistency):
@@ -82,11 +84,10 @@ def build_score(prob, confidence, consistency, volatility):
     )
 
 
-# ---------- EV (GRANDE DIFERENCIAL) ----------
+# ---------- EV SUAVE ----------
 
 def estimate_market_odds(prob):
-    margin = 0.05
-    return (1 / prob) * (1 + margin)
+    return 1 / prob
 
 
 def calculate_ev(prob):
@@ -94,7 +95,7 @@ def calculate_ev(prob):
     return (prob * odds) - 1
 
 
-# ---------- STAKE MELHORADO ----------
+# ---------- STAKE ----------
 
 def calculate_stake(prob, confidence):
     edge = prob - 0.5
@@ -102,9 +103,7 @@ def calculate_stake(prob, confidence):
     if edge <= 0:
         return 0.5
 
-    kelly = edge / (1 - edge)
-
-    return max(1, min(kelly * confidence * 10, 7))
+    return max(1, min(edge * confidence * 10, 6))
 
 
 # ---------- MAIN ----------
@@ -141,10 +140,6 @@ def analyze_and_select(events_with_preds):
         consistency = calculate_consistency(event)
         volatility = calculate_volatility(event)
 
-        # filtros globais fortes
-        if consistency < 0.45 or volatility > 0.75:
-            continue
-
         for market_name, api_prob in markets:
 
             if api_prob < MIN_PROB:
@@ -169,6 +164,7 @@ def analyze_and_select(events_with_preds):
 
             ev = calculate_ev(final_prob)
 
+            # EV leve (não bloqueia tudo)
             if ev < MIN_EV:
                 continue
 
@@ -181,7 +177,6 @@ def analyze_and_select(events_with_preds):
                 "confidence": round(confidence * 100, 2),
                 "score": round(score, 3),
                 "stake_pct": round(stake, 2),
-                "ev": round(ev, 3),
                 "event_date": event.get("event_date")
             })
 
