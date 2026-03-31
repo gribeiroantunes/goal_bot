@@ -1,11 +1,34 @@
 import os
 import asyncio
+from datetime import datetime, timezone, timedelta
 from telegram import Bot
 from data_collector import get_events_week, get_predictions, merge_events_predictions
 from market_analyzer import analyze_and_select
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = -1003858302105
+
+
+def formatar_data_api(event_date_str):
+    try:
+        dt = datetime.strptime(event_date_str, "%Y-%m-%dT%H:%M:%S%z")
+        brasil = dt.astimezone(timezone(timedelta(hours=-3)))
+        return brasil.strftime("%d/%m às %H:%M")
+    except:
+        return "Horário indefinido"
+
+
+def traduzir_mercado(m):
+    mapa = {
+        "Over 1.5": "Gols: Mais que 1.5",
+        "Over 2.5": "Gols: Mais que 2.5",
+        "Over 3.5": "Gols: Mais que 3.5",
+        "BTTS": "Ambos marcam",
+        "1": "Time da casa para vencer",
+        "X": "Empate",
+        "2": "Time visitante para vencer"
+    }
+    return mapa.get(m, m)
 
 
 def filter_vip(selections):
@@ -20,7 +43,7 @@ def filter_vip(selections):
             bet["stake_pct"] = 6
             vip.append(bet)
 
-    # 🔥 NUNCA fica vazio
+    # 🔥 nunca fica vazio
     if not vip:
         vip = selections[:3]
 
@@ -30,13 +53,14 @@ def filter_vip(selections):
 def format_message(selections):
     msg = "💎 *ENTRADAS PREMIUM DO DIA*\n\n"
 
-    msg += "🔥 *Alta probabilidade*\n"
-    msg += "👉 Mercados: Gols + Resultado\n"
-    msg += "👉 Entrada sugerida: *5% a 7% da banca*\n\n"
+    msg += "🔥 Alta probabilidade\n"
+    msg += "👉 Gols + Resultado\n"
+    msg += "👉 Entrada: 5% a 7% da banca\n\n"
 
     for s in selections:
         msg += f"⚽ {s['fixture_name']}\n"
-        msg += f"👉 {s['market']}\n"
+        msg += f"🕒 {formatar_data_api(s.get('event_date'))}\n"
+        msg += f"👉 {traduzir_mercado(s['market'])}\n"
         msg += f"📊 Chance: {int(s['model_prob']*100)}%\n"
         msg += f"💰 Stake: {s['stake_pct']}%\n\n"
 
