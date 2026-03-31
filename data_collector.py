@@ -37,7 +37,6 @@ def get_events_week(days_ahead: int = 7):
     }
 
     data = safe_get(f"{BASE_URL}/events/", params)
-
     events = data.get("results", [])
 
     logger.info(f"Eventos válidos coletados da API: {len(events)}")
@@ -58,23 +57,22 @@ def get_predictions():
 
 def enrich_event(event):
     """
-    Prepara o evento para análise avançada.
-    NÃO quebra compatibilidade com sua estrutura.
+    Enriquecimento leve (não depende de dados perfeitos)
     """
 
     stats = event.get("stats", {}) or {}
 
-    event["home_avg_goals_scored"] = stats.get("home_avg_goals_scored", 1.2)
-    event["away_avg_goals_scored"] = stats.get("away_avg_goals_scored", 1.1)
+    event["home_avg_goals_scored"] = stats.get("home_avg_goals_scored", 1.3)
+    event["away_avg_goals_scored"] = stats.get("away_avg_goals_scored", 1.2)
 
-    event["home_avg_goals_conceded"] = stats.get("home_avg_goals_conceded", 1.1)
-    event["away_avg_goals_conceded"] = stats.get("away_avg_goals_conceded", 1.2)
+    event["home_avg_goals_conceded"] = stats.get("home_avg_goals_conceded", 1.2)
+    event["away_avg_goals_conceded"] = stats.get("away_avg_goals_conceded", 1.3)
 
-    event["home_goal_variance"] = stats.get("home_goal_variance", 1.2)
-    event["away_goal_variance"] = stats.get("away_goal_variance", 1.2)
+    event["home_goal_variance"] = stats.get("home_goal_variance", 1.5)
+    event["away_goal_variance"] = stats.get("away_goal_variance", 1.5)
 
     event["btts_freq"] = stats.get("btts_freq", 0.5)
-    event["over_35_freq"] = stats.get("over_35_freq", 0.3)
+    event["over_35_freq"] = stats.get("over_35_freq", 0.35)
 
     return event
 
