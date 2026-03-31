@@ -106,15 +106,18 @@ def analyze_and_select(events_with_preds):
 
             stake = calculate_stake(final_prob, confidence)
 
-            selections.append({
-                "fixture_name": f"{home} vs {away}",
-                "market": market_name,
-                "model_prob": round(final_prob, 3),
-                "confidence": round(confidence * 100, 2),
-                "score": round(score, 3),
-                "stake_pct": round(stake, 2),
-                "expected_goals": trend * 3.5  # 🔥 usado no VIP
-            })
+          selections.append({
+    "fixture_name": f"{home} vs {away}",
+    "market": market_name,
+    "model_prob": round(final_prob, 3),
+    "confidence": round(confidence * 100, 2),
+    "score": round(score, 3),
+    "stake_pct": round(stake, 2),
+    "expected_goals": trend * 3.5,
+
+    # 🔥 ESSENCIAL
+    "event_date": event.get("event_date")
+})
 
     selections.sort(key=lambda x: x["score"], reverse=True)
 
