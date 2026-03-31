@@ -1,3 +1,4 @@
+# bot_vip.py
 import os
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -5,7 +6,6 @@ from telegram import Bot
 
 from data_collector import get_events_week, get_predictions, merge_events_predictions
 from market_analyzer import analyze_and_select
-from bot_free import filter_free
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = -1003858302105
@@ -41,27 +41,16 @@ def traduzir_mercado(m):
     return mapa.get(m, m)
 
 
-# ---------------- FILTRO VIP (FINAL) ----------------
+# ---------------- VIP (TOP PICKS) ----------------
 
-def filter_vip(selections, free):
+def filter_vip(selections):
+    ordered = sorted(selections, key=lambda x: x["score"], reverse=True)
+
     vip = []
 
-    free_keys = {(f["fixture_name"], f["market"]) for f in free}
+    for bet in ordered:
 
-    max_free_score = max([s["score"] for s in free], default=0)
-    max_free_prob = max([s["model_prob"] for s in free], default=0)
-
-    for bet in selections:
-
-        # 🚫 não repetir FREE
-        if (bet["fixture_name"], bet["market"]) in free_keys:
-            continue
-
-        # 🔥 regra equilibrada (VIP melhor ou equivalente)
-        if (
-            bet["score"] >= max_free_score - 0.01 and
-            bet["model_prob"] >= max_free_prob - 0.02
-        ):
+        if bet["model_prob"] >= 0.60 and bet["confidence"] >= 60:
 
             if bet["model_prob"] >= 0.75:
                 bet["stake_pct"] = 7
@@ -72,28 +61,15 @@ def filter_vip(selections, free):
 
             vip.append(bet)
 
-    # 🔥 fallback 1 (melhores fora do FREE)
+        if len(vip) >= 5:
+            break
+
     if not vip:
-        vip = [
-            s for s in selections
-            if (s["fixture_name"], s["market"]) not in free_keys
-        ]
-
-        vip = sorted(vip, key=lambda x: x["score"], reverse=True)
-
-        for v in vip[:3]:
-            v["stake_pct"] = 5
-
-        vip = vip[:5]
-
-    # 🔥 fallback 2 (garantia absoluta)
-    if not vip:
-        vip = sorted(selections, key=lambda x: x["score"], reverse=True)[:3]
-
+        vip = ordered[:3]
         for v in vip:
             v["stake_pct"] = 5
 
-    return vip[:5]
+    return vip
 
 
 # ---------------- MENSAGEM ----------------
@@ -123,18 +99,16 @@ async def main():
 
     selections = analyze_and_select(data)
 
-    print(f"Selections: {len(selections)}")  # DEBUG
+    print(f"Selections: {len(selections)}")
 
-    free = filter_free(selections)
-    vip = filter_vip(selections, free)
+    vip = filter_vip(selections)
 
-    print(f"Free: {len(free)} | VIP: {len(vip)}")  # DEBUG
+    print(f"VIP: {len(vip)}")
 
-    # 🚨 garantia de envio
     if not vip:
         await bot.send_message(
             CHANNEL_ID,
-            "⚠️ Nenhuma entrada premium encontrada hoje.\nGestão e disciplina acima de tudo."
+            "⚠️ Nenhuma entrada premium hoje.\nGestão acima de tudo."
         )
         return
 
@@ -144,8 +118,6 @@ async def main():
         parse_mode="Markdown"
     )
 
-
-# ---------------- RUN ----------------
 
 if __name__ == "__main__":
     asyncio.run(main())
