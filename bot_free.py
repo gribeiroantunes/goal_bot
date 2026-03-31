@@ -1,13 +1,17 @@
+# bot_free.py
 import os
 import asyncio
 from datetime import datetime, timezone, timedelta
 from telegram import Bot
+
 from data_collector import get_events_week, get_predictions, merge_events_predictions
 from market_analyzer import analyze_and_select
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = -1003725207734
 
+
+# ---------------- FORMATADORES ----------------
 
 def formatar_data_api(event_date_str):
     try:
@@ -34,19 +38,67 @@ def traduzir_mercado(m):
     return mapa.get(m, m)
 
 
-def filter_free(selections):
+# ---------------- VIP FIRST ----------------
+
+def filter_vip(selections):
+    ordered = sorted(selections, key=lambda x: x["score"], reverse=True)
+
+    vip = []
+
+    for bet in ordered:
+
+        if bet["model_prob"] >= 0.60 and bet["confidence"] >= 60:
+
+            if bet["model_prob"] >= 0.75:
+                bet["stake_pct"] = 7
+            elif bet["model_prob"] >= 0.70:
+                bet["stake_pct"] = 6
+            else:
+                bet["stake_pct"] = 5
+
+            vip.append(bet)
+
+        if len(vip) >= 5:
+            break
+
+    if not vip:
+        vip = ordered[:3]
+        for v in vip:
+            v["stake_pct"] = 5
+
+    return vip
+
+
+# ---------------- FREE (RESTANTE) ----------------
+
+def filter_free(selections, vip):
     free = []
 
+    vip_keys = {(v["fixture_name"], v["market"]) for v in vip}
+
     for s in selections:
-        if s["market"] in ["Over 1.5", "Over 2.5", "Over 3.5", "Under 2.5", "BTTS", "No BTTS"]:
-            if s["model_prob"] >= 0.58 and s["confidence"] >= 55:
-                free.append(s)
+
+        if (s["fixture_name"], s["market"]) in vip_keys:
+            continue
+
+        if s["market"] not in ["Over 1.5", "Over 2.5", "Over 3.5", "Under 2.5", "BTTS", "No BTTS"]:
+            continue
+
+        if s["model_prob"] >= 0.55 and s["confidence"] >= 55:
+            free.append(s)
 
     if not free:
-        free = sorted(selections, key=lambda x: x["score"], reverse=True)[:5]
+        free = [
+            s for s in selections
+            if s["market"] in ["Over 1.5", "Over 2.5", "BTTS"]
+        ]
+
+        free = sorted(free, key=lambda x: x["score"], reverse=True)[:5]
 
     return free[:7]
 
+
+# ---------------- MENSAGEM ----------------
 
 def format_message(selections):
     msg = "📊 *OPORTUNIDADES DE GOLS DO DIA*\n\n"
@@ -58,10 +110,12 @@ def format_message(selections):
         msg += f"👉 {traduzir_mercado(s['market'])}\n"
         msg += f"📊 Chance: {int(s['model_prob']*100)}%\n\n"
 
-
+    msg += "💎 Entre no VIP:\nhttps://t.me/+ckOVtoDxOItmMzUx"
 
     return msg
 
+
+# ---------------- MAIN ----------------
 
 async def main():
     bot = Bot(token=TELEGRAM_TOKEN)
@@ -71,13 +125,23 @@ async def main():
     data = merge_events_predictions(events, preds)
 
     selections = analyze_and_select(data)
-    free = filter_free(selections)
+
+    print(f"Selections: {len(selections)}")
+
+    vip = filter_vip(selections)
+    free = filter_free(selections, vip)
+
+    print(f"VIP: {len(vip)} | FREE: {len(free)}")
 
     if not free:
         await bot.send_message(CHANNEL_ID, "⚠️ Sem oportunidades hoje.")
         return
 
-    await bot.send_message(CHANNEL_ID, format_message(free), parse_mode="Markdown")
+    await bot.send_message(
+        CHANNEL_ID,
+        format_message(free),
+        parse_mode="Markdown"
+    )
 
 
 if __name__ == "__main__":
