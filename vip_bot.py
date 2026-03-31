@@ -49,7 +49,7 @@ async def main():
     bot = Bot(token=TELEGRAM_TOKEN)
 
     events = get_events_week()
-    preds = get_predictions(events)
+    preds = get_predictions()
     data = merge_events_predictions(events, preds)
 
     selections = analyze_and_select(data)
