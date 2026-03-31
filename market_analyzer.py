@@ -3,12 +3,10 @@ import math
 
 logger = logging.getLogger("market_analyzer")
 
-# ---------------- CONFIG (AJUSTADO) ----------------
-MIN_PROB = 0.52
-MIN_SCORE = 0.58
-MAX_DIVERGENCE = 0.20
-MIN_EV = 0.01
-# --------------------------------------------------
+MIN_PROB = 0.50
+MIN_SCORE = 0.55
+MAX_DIVERGENCE = 0.22
+
 
 MARKET_WEIGHTS = {
     "Over 1.5": 1.0,
@@ -23,28 +21,21 @@ MARKET_WEIGHTS = {
 }
 
 
-# ---------- CORE ----------
-
 def calibrate_prob(p):
     try:
         logit = math.log(p / (1 - p))
-        adjusted = 1 / (1 + math.exp(-0.7 * logit))
-        return max(0.05, min(adjusted, 0.95))
+        return max(0.05, min(1 / (1 + math.exp(-0.7 * logit)), 0.95))
     except:
         return p
 
 
 def calculate_goal_trend(event):
-    home = event.get("home_avg_goals_scored", 1.3)
-    away = event.get("away_avg_goals_scored", 1.2)
-    conceded = (
-        event.get("home_avg_goals_conceded", 1.2) +
-        event.get("away_avg_goals_conceded", 1.3)
+    base = (
+        event.get("home_avg_goals_scored", 1.3) +
+        event.get("away_avg_goals_scored", 1.2)
     ) / 2
 
-    trend = (home + away + conceded) / 3
-
-    return max(0.4, min(trend / 3, 0.75))
+    return max(0.45, min(base / 2.5, 0.75))
 
 
 def calculate_consistency(event):
@@ -53,7 +44,7 @@ def calculate_consistency(event):
         event.get("away_goal_variance", 1.5)
     ) / 2
 
-    return max(0.4, min(1 - (var / 5), 0.8))
+    return max(0.45, min(1 - (var / 5), 0.8))
 
 
 def calculate_volatility(event):
@@ -84,19 +75,6 @@ def build_score(prob, confidence, consistency, volatility):
     )
 
 
-# ---------- EV SUAVE ----------
-
-def estimate_market_odds(prob):
-    return 1 / prob
-
-
-def calculate_ev(prob):
-    odds = estimate_market_odds(prob)
-    return (prob * odds) - 1
-
-
-# ---------- STAKE ----------
-
 def calculate_stake(prob, confidence):
     edge = prob - 0.5
 
@@ -105,8 +83,6 @@ def calculate_stake(prob, confidence):
 
     return max(1, min(edge * confidence * 10, 6))
 
-
-# ---------- MAIN ----------
 
 def analyze_and_select(events_with_preds):
 
@@ -145,9 +121,7 @@ def analyze_and_select(events_with_preds):
             if api_prob < MIN_PROB:
                 continue
 
-            calibrated = calibrate_prob(api_prob)
-            final_prob = build_final_prob(calibrated, trend)
-
+            final_prob = build_final_prob(calibrate_prob(api_prob), trend)
             divergence = abs(api_prob - trend)
 
             if divergence > MAX_DIVERGENCE:
@@ -156,16 +130,9 @@ def analyze_and_select(events_with_preds):
             confidence = build_confidence(api_conf, divergence, consistency)
             score = build_score(final_prob, confidence, consistency, volatility)
 
-            weight = MARKET_WEIGHTS.get(market_name, 1)
-            score *= weight
+            score *= MARKET_WEIGHTS.get(market_name, 1)
 
             if score < MIN_SCORE:
-                continue
-
-            ev = calculate_ev(final_prob)
-
-            # EV leve (não bloqueia tudo)
-            if ev < MIN_EV:
                 continue
 
             stake = calculate_stake(final_prob, confidence)
@@ -182,6 +149,5 @@ def analyze_and_select(events_with_preds):
 
     selections.sort(key=lambda x: x["score"], reverse=True)
 
-    logger.info(f"Oportunidades finais: {len(selections)}")
-
+    logger.info(f"Oportunidades: {len(selections)}")
     return selections
