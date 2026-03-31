@@ -51,7 +51,6 @@ def calculate_stake(prob, confidence):
     return max(0.5, min(raw * confidence * 10, 10))
 
 
-# 🔥 FUNÇÃO PRINCIPAL (CORRETA)
 def analyze_and_select(events_with_preds):
 
     selections = []
@@ -60,7 +59,7 @@ def analyze_and_select(events_with_preds):
         event = item["event"]
         pred = item["prediction"]
 
-        # 🚫 IGNORA jogos já iniciados
+        # 🚫 ignorar jogos iniciados
         if event.get("status") != "notstarted":
             continue
 
@@ -71,7 +70,9 @@ def analyze_and_select(events_with_preds):
             ("Over 1.5", pred.get("prob_over_15", 0) / 100),
             ("Over 2.5", pred.get("prob_over_25", 0) / 100),
             ("Over 3.5", pred.get("prob_over_35", 0) / 100),
+            ("Under 2.5", pred.get("prob_under_25", 0) / 100),
             ("BTTS", pred.get("prob_btts_yes", 0) / 100),
+            ("No BTTS", pred.get("prob_btts_no", 0) / 100),
             ("1", pred.get("prob_home_win", 0) / 100),
             ("X", pred.get("prob_draw", 0) / 100),
             ("2", pred.get("prob_away_win", 0) / 100),
@@ -111,7 +112,6 @@ def analyze_and_select(events_with_preds):
                 "confidence": round(confidence * 100, 2),
                 "score": round(score, 3),
                 "stake_pct": round(stake, 2),
-                "expected_goals": trend * 3.5,
                 "event_date": event.get("event_date")
             })
 
