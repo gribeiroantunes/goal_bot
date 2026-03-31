@@ -5,7 +5,7 @@ from data_collector import get_events_week, get_predictions, merge_events_predic
 from market_analyzer import analyze_and_select
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = -100SEU_CANAL_FREE_AQUI  # 🔥 ALTERAR
+CHANNEL_ID = -1003725207734
 
 async def main():
     bot = Bot(token=TELEGRAM_TOKEN)
