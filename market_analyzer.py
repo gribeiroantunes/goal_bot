@@ -1,4 +1,5 @@
 import logging
+import math
 
 logger = logging.getLogger("market_analyzer")
 
@@ -6,23 +7,58 @@ logger = logging.getLogger("market_analyzer")
 MIN_PROB = 0.55
 MIN_SCORE = 0.60
 MAX_DIVERGENCE = 0.15
+MIN_EV = 0.03
 # ----------------------------------------
 
+MARKET_WEIGHTS = {
+    "Over 1.5": 1.0,
+    "Over 2.5": 0.95,
+    "Over 3.5": 0.85,
+    "Under 2.5": 0.9,
+    "BTTS": 0.95,
+    "No BTTS": 0.9,
+    "1": 0.85,
+    "X": 0.75,
+    "2": 0.85,
+}
+
+
+# ---------- CORE MELHORADO ----------
 
 def calibrate_prob(p):
-    return 0.9 * p + 0.05
+    try:
+        logit = math.log(p / (1 - p))
+        adjusted = 1 / (1 + math.exp(-0.85 * logit))
+        return max(0.01, min(adjusted, 0.99))
+    except:
+        return p
 
 
 def calculate_goal_trend(event):
-    return 0.6
+    home_avg = event.get("home_avg_goals_scored", 1.2)
+    away_avg = event.get("away_avg_goals_scored", 1.1)
+    home_conceded = event.get("home_avg_goals_conceded", 1.1)
+    away_conceded = event.get("away_avg_goals_conceded", 1.2)
+
+    total = (home_avg + away_avg + home_conceded + away_conceded) / 4
+
+    return max(0.3, min(total / 3, 1))
 
 
 def calculate_consistency(event):
-    return 0.65
+    home_var = event.get("home_goal_variance", 1.2)
+    away_var = event.get("away_goal_variance", 1.2)
+
+    avg_var = (home_var + away_var) / 2
+
+    return max(0.3, min(1 - (avg_var / 4), 1))
 
 
 def calculate_volatility(event):
-    return 0.4
+    big = event.get("over_35_freq", 0.3)
+    btts = event.get("btts_freq", 0.5)
+
+    return max(0.1, min((big + btts) / 2, 1))
 
 
 def build_final_prob(api_prob, trend):
@@ -46,10 +82,32 @@ def build_score(prob, confidence, consistency, volatility):
     )
 
 
-def calculate_stake(prob, confidence):
-    raw = (prob - 0.5) * 2
-    return max(0.5, min(raw * confidence * 10, 10))
+# ---------- EV (GRANDE DIFERENCIAL) ----------
 
+def estimate_market_odds(prob):
+    margin = 0.05
+    return (1 / prob) * (1 + margin)
+
+
+def calculate_ev(prob):
+    odds = estimate_market_odds(prob)
+    return (prob * odds) - 1
+
+
+# ---------- STAKE MELHORADO ----------
+
+def calculate_stake(prob, confidence):
+    edge = prob - 0.5
+
+    if edge <= 0:
+        return 0.5
+
+    kelly = edge / (1 - edge)
+
+    return max(1, min(kelly * confidence * 10, 7))
+
+
+# ---------- MAIN ----------
 
 def analyze_and_select(events_with_preds):
 
@@ -59,7 +117,6 @@ def analyze_and_select(events_with_preds):
         event = item["event"]
         pred = item["prediction"]
 
-        # 🚫 ignorar jogos iniciados
         if event.get("status") != "notstarted":
             continue
 
@@ -84,6 +141,10 @@ def analyze_and_select(events_with_preds):
         consistency = calculate_consistency(event)
         volatility = calculate_volatility(event)
 
+        # filtros globais fortes
+        if consistency < 0.45 or volatility > 0.75:
+            continue
+
         for market_name, api_prob in markets:
 
             if api_prob < MIN_PROB:
@@ -100,7 +161,15 @@ def analyze_and_select(events_with_preds):
             confidence = build_confidence(api_conf, divergence, consistency)
             score = build_score(final_prob, confidence, consistency, volatility)
 
+            weight = MARKET_WEIGHTS.get(market_name, 1)
+            score *= weight
+
             if score < MIN_SCORE:
+                continue
+
+            ev = calculate_ev(final_prob)
+
+            if ev < MIN_EV:
                 continue
 
             stake = calculate_stake(final_prob, confidence)
@@ -112,6 +181,7 @@ def analyze_and_select(events_with_preds):
                 "confidence": round(confidence * 100, 2),
                 "score": round(score, 3),
                 "stake_pct": round(stake, 2),
+                "ev": round(ev, 3),
                 "event_date": event.get("event_date")
             })
 
