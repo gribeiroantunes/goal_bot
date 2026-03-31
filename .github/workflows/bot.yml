@@ -2,13 +2,14 @@ name: Goal Bots
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # 09:00 Brasil
-    - cron: '0 13 * * *'  # 10:00 Brasil
+    - cron: '0 12 * * *'  # 09:00 Brasil (free + vip)
+    - cron: '0 13 * * *'  # 10:00 Brasil (report)
   workflow_dispatch:
 
 jobs:
-  run:
+  free_vip:
     runs-on: ubuntu-latest
+    if: github.event.schedule == '0 12 * * *'
 
     steps:
       - uses: actions/checkout@v4
@@ -17,21 +18,32 @@ jobs:
         with:
           python-version: '3.10'
 
-      - run: |
-          pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-      - name: Run bots
+      - name: Run Free + VIP
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           BZ_API_KEY: ${{ secrets.BZ_API_KEY }}
         run: |
-          HOUR=$(date +%H)
+          python bot_free.py
+          python vip_bot.py
 
-          if [ "$HOUR" -eq 12 ]; then
-            python bot_free.py
-            python vip_bot.py
-          fi
 
-          if [ "$HOUR" -eq 13 ]; then
-            python report_bot.py
-          fi
+  report:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 13 * * *'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - run: pip install -r requirements.txt
+
+      - name: Run Report
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: |
+          python report_bot.py
