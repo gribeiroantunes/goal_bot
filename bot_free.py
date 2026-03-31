@@ -58,7 +58,7 @@ def format_message(selections):
         msg += f"👉 {traduzir_mercado(s['market'])}\n"
         msg += f"📊 Chance: {int(s['model_prob']*100)}%\n\n"
 
-    msg += "💎 Entre no VIP:\nhttps://t.me/+ckOVtoDxOItmMzUx"
+
 
     return msg
 
