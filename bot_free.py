@@ -7,28 +7,44 @@ from market_analyzer import analyze_and_select
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = -1003725207734
 
+
+def format_message(selections):
+    msg = "📊 *OPORTUNIDADES DO DIA (GOLS)*\n\n"
+
+    msg += "💡 *Dicas simples para hoje*\n"
+    msg += "👉 Foco apenas em gols\n"
+    msg += "👉 Entrada sugerida: *2% a 3% da banca*\n\n"
+
+    for s in selections[:7]:
+
+        # 🔥 só gols
+        if s["market"] not in ["Over 1.5", "Over 2.5", "BTTS"]:
+            continue
+
+        msg += f"⚽ {s['fixture_name']}\n"
+        msg += f"👉 {s['market']}\n"
+        msg += f"📊 Chance: {int(s['model_prob']*100)}%\n\n"
+
+    msg += "💎 Quer entradas mais fortes?\n"
+    msg += "👉 Entre no VIP:\n"
+    msg += "https://t.me/+ckOVtoDxOItmMzUx"
+
+    return msg
+
+
 async def main():
     bot = Bot(token=TELEGRAM_TOKEN)
 
     events = get_events_week()
-    preds = get_predictions()
-    merged = merge_events_predictions(events, preds)
-    selections = analyze_and_select(merged)
+    preds = get_predictions(events)
+    data = merge_events_predictions(events, preds)
 
-    if not selections:
-        await bot.send_message(CHANNEL_ID, "❌ Nenhuma oportunidade hoje.")
-        return
+    selections = analyze_and_select(data)
 
-    msg = "📊 *OPORTUNIDADES DO DIA*\n\n"
-
-    for s in selections[:8]:
-        msg += (
-            f"⚽ {s['fixture_name']}\n"
-            f"👉 {s['market']}\n"
-            f"🔥 Prob: {s['model_prob']*100:.0f}%\n\n"
-        )
+    msg = format_message(selections)
 
     await bot.send_message(CHANNEL_ID, msg, parse_mode="Markdown")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
