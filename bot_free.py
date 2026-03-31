@@ -39,8 +39,11 @@ def filter_free(selections):
 
     for s in selections:
         if s["market"] in ["Over 1.5", "Over 2.5", "Over 3.5", "Under 2.5", "BTTS", "No BTTS"]:
-            if s["model_prob"] >= 0.60 and s["confidence"] >= 60:
+            if s["model_prob"] >= 0.58 and s["confidence"] >= 55:
                 free.append(s)
+
+    if not free:
+        free = sorted(selections, key=lambda x: x["score"], reverse=True)[:5]
 
     return free[:7]
 
@@ -69,6 +72,10 @@ async def main():
 
     selections = analyze_and_select(data)
     free = filter_free(selections)
+
+    if not free:
+        await bot.send_message(CHANNEL_ID, "⚠️ Sem oportunidades hoje.")
+        return
 
     await bot.send_message(CHANNEL_ID, format_message(free), parse_mode="Markdown")
 
