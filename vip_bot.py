@@ -9,12 +9,26 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = -1003858302105
 
 
+from datetime import datetime, timezone, timedelta
+
+
 def formatar_data_api(event_date_str):
     try:
-        dt = datetime.strptime(event_date_str, "%Y-%m-%dT%H:%M:%S%z")
+        if not event_date_str:
+            return "Horário indefinido"
+
+        # 🔥 corrige formato +0400 → +04:00
+        if event_date_str[-3] != ":":
+            event_date_str = event_date_str[:-2] + ":" + event_date_str[-2:]
+
+        dt = datetime.fromisoformat(event_date_str)
+
         brasil = dt.astimezone(timezone(timedelta(hours=-3)))
+
         return brasil.strftime("%d/%m às %H:%M")
-    except:
+
+    except Exception as e:
+        print("Erro ao converter:", event_date_str, e)
         return "Horário indefinido"
 
 
