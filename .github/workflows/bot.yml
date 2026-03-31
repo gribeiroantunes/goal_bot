@@ -1,31 +1,37 @@
-name: Daily Goal Bot
+name: Goal Bots
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 12 * * *'  # 09:00 Brasil
+    - cron: '0 13 * * *'  # 10:00 Brasil
   workflow_dispatch:
 
 jobs:
-  run-bot:
+  run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Instalar Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Instalar dependências
-        run: |
-          pip install --upgrade pip
+      - run: |
           pip install -r requirements.txt
 
-      - name: Rodar bot
+      - name: Run bots
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          BZ_API_KEY: ${{ secrets.BZ_API_KEY }}   # 🔥 ESSA LINHA FALTAVA
+          BZ_API_KEY: ${{ secrets.BZ_API_KEY }}
         run: |
-          python bot_final_telegram.py
+          HOUR=$(date +%H)
+
+          if [ "$HOUR" -eq 12 ]; then
+            python bot_free.py
+            python vip_bot.py
+          fi
+
+          if [ "$HOUR" -eq 13 ]; then
+            python report_bot.py
+          fi
