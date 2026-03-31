@@ -1,0 +1,942 @@
+{
+  "1001_corners_1001": {
+    "opening": {
+      "timestamp": "2026-03-28T21:41:16.484468",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.2,
+          "under_odd": 1.8,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.09,
+          "under_odd": 1.73,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.15,
+          "under_odd": 1.8,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.16,
+          "under_odd": 1.84,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.05,
+          "under_odd": 1.86,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    },
+    "history": [
+      {
+        "timestamp": "2026-03-28T21:41:16.484468",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.2,
+            "under_odd": 1.8,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.09,
+            "under_odd": 1.73,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.15,
+            "under_odd": 1.8,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.16,
+            "under_odd": 1.84,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.05,
+            "under_odd": 1.86,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      },
+      {
+        "timestamp": "2026-03-28T21:41:33.066477",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.2,
+            "under_odd": 1.8,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.09,
+            "under_odd": 1.73,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.15,
+            "under_odd": 1.8,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.16,
+            "under_odd": 1.84,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 8.5",
+            "line": 8.5,
+            "over_odd": 2.05,
+            "under_odd": 1.86,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      }
+    ],
+    "latest": {
+      "timestamp": "2026-03-28T21:41:33.066477",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.2,
+          "under_odd": 1.8,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.09,
+          "under_odd": 1.73,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.15,
+          "under_odd": 1.8,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.16,
+          "under_odd": 1.84,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 8.5",
+          "line": 8.5,
+          "over_odd": 2.05,
+          "under_odd": 1.86,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    }
+  },
+  "1002_corners_1002": {
+    "opening": {
+      "timestamp": "2026-03-28T21:41:16.488608",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.13,
+          "under_odd": 1.7,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.19,
+          "under_odd": 1.7,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.27,
+          "under_odd": 1.77,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.12,
+          "under_odd": 1.86,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.08,
+          "under_odd": 1.69,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    },
+    "history": [
+      {
+        "timestamp": "2026-03-28T21:41:16.488608",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.13,
+            "under_odd": 1.7,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.19,
+            "under_odd": 1.7,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.27,
+            "under_odd": 1.77,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.12,
+            "under_odd": 1.86,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.08,
+            "under_odd": 1.69,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      },
+      {
+        "timestamp": "2026-03-28T21:41:33.071635",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.13,
+            "under_odd": 1.7,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.19,
+            "under_odd": 1.7,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.27,
+            "under_odd": 1.77,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.12,
+            "under_odd": 1.86,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.08,
+            "under_odd": 1.69,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      }
+    ],
+    "latest": {
+      "timestamp": "2026-03-28T21:41:33.071635",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.13,
+          "under_odd": 1.7,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.19,
+          "under_odd": 1.7,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.27,
+          "under_odd": 1.77,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.12,
+          "under_odd": 1.86,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.08,
+          "under_odd": 1.69,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    }
+  },
+  "1003_corners_1003": {
+    "opening": {
+      "timestamp": "2026-03-28T21:41:16.493098",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.01,
+          "under_odd": 1.81,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.0,
+          "under_odd": 1.83,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.93,
+          "under_odd": 1.8,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.02,
+          "under_odd": 1.87,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.09,
+          "under_odd": 1.81,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    },
+    "history": [
+      {
+        "timestamp": "2026-03-28T21:41:16.493098",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.01,
+            "under_odd": 1.81,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.0,
+            "under_odd": 1.83,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.93,
+            "under_odd": 1.8,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.02,
+            "under_odd": 1.87,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.09,
+            "under_odd": 1.81,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      },
+      {
+        "timestamp": "2026-03-28T21:41:33.077636",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.01,
+            "under_odd": 1.81,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.0,
+            "under_odd": 1.83,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.93,
+            "under_odd": 1.8,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.02,
+            "under_odd": 1.87,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.09,
+            "under_odd": 1.81,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      }
+    ],
+    "latest": {
+      "timestamp": "2026-03-28T21:41:33.077636",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.01,
+          "under_odd": 1.81,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.0,
+          "under_odd": 1.83,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.93,
+          "under_odd": 1.8,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.02,
+          "under_odd": 1.87,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.09,
+          "under_odd": 1.81,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    }
+  },
+  "1004_corners_1004": {
+    "opening": {
+      "timestamp": "2026-03-28T21:41:16.501038",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.83,
+          "under_odd": 2.03,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.85,
+          "under_odd": 2.05,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.9,
+          "under_odd": 2.05,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.79,
+          "under_odd": 1.92,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.87,
+          "under_odd": 2.06,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    },
+    "history": [
+      {
+        "timestamp": "2026-03-28T21:41:16.501038",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.83,
+            "under_odd": 2.03,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.85,
+            "under_odd": 2.05,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.9,
+            "under_odd": 2.05,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.79,
+            "under_odd": 1.92,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.87,
+            "under_odd": 2.06,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      },
+      {
+        "timestamp": "2026-03-28T21:41:33.083643",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.83,
+            "under_odd": 2.03,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.85,
+            "under_odd": 2.05,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.9,
+            "under_odd": 2.05,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.79,
+            "under_odd": 1.92,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 1.87,
+            "under_odd": 2.06,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      }
+    ],
+    "latest": {
+      "timestamp": "2026-03-28T21:41:33.083643",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.83,
+          "under_odd": 2.03,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.85,
+          "under_odd": 2.05,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.9,
+          "under_odd": 2.05,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.79,
+          "under_odd": 1.92,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 1.87,
+          "under_odd": 2.06,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    }
+  },
+  "1005_corners_1005": {
+    "opening": {
+      "timestamp": "2026-03-28T21:41:16.506852",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.11,
+          "under_odd": 1.95,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.16,
+          "under_odd": 1.83,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.14,
+          "under_odd": 1.81,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.05,
+          "under_odd": 1.94,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.1,
+          "under_odd": 1.82,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    },
+    "history": [
+      {
+        "timestamp": "2026-03-28T21:41:16.506852",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.11,
+            "under_odd": 1.95,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.16,
+            "under_odd": 1.83,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.14,
+            "under_odd": 1.81,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.05,
+            "under_odd": 1.94,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.1,
+            "under_odd": 1.82,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      },
+      {
+        "timestamp": "2026-03-28T21:41:33.089923",
+        "odds": [
+          {
+            "bookmaker": "Pinnacle",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.11,
+            "under_odd": 1.95,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "Bet365",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.16,
+            "under_odd": 1.83,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "Betfair Exchange",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.14,
+            "under_odd": 1.81,
+            "is_sharp": true
+          },
+          {
+            "bookmaker": "William Hill",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.05,
+            "under_odd": 1.94,
+            "is_sharp": false
+          },
+          {
+            "bookmaker": "1xBet",
+            "market": "Corners Over/Under 11.5",
+            "line": 11.5,
+            "over_odd": 2.1,
+            "under_odd": 1.82,
+            "is_sharp": false
+          }
+        ],
+        "has_sharp": true
+      }
+    ],
+    "latest": {
+      "timestamp": "2026-03-28T21:41:33.089923",
+      "odds": [
+        {
+          "bookmaker": "Pinnacle",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.11,
+          "under_odd": 1.95,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "Bet365",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.16,
+          "under_odd": 1.83,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "Betfair Exchange",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.14,
+          "under_odd": 1.81,
+          "is_sharp": true
+        },
+        {
+          "bookmaker": "William Hill",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.05,
+          "under_odd": 1.94,
+          "is_sharp": false
+        },
+        {
+          "bookmaker": "1xBet",
+          "market": "Corners Over/Under 11.5",
+          "line": 11.5,
+          "over_odd": 2.1,
+          "under_odd": 1.82,
+          "is_sharp": false
+        }
+      ],
+      "has_sharp": true
+    }
+  }
+}

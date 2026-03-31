@@ -1,0 +1,169 @@
+fixture_id,fixture_name,market,odd,ev,confidence,stake_pct
+9057,Lithuania vs Georgia,Over r_15,1.15,0.838,38.48025726239139,5.0
+9057,Lithuania vs Georgia,Over r_25,1.66,0.567,38.48025726239139,5.0
+9057,Lithuania vs Georgia,Over r_35,3.61,0.252,38.48025726239139,5.0
+9057,Lithuania vs Georgia,BTTS,8.63,0.094,38.48025726239139,5.0
+8737,Rivers United vs Kun Khalifat FC,Over r_15,1.48,0.641,45.8063931087114,5.0
+8737,Rivers United vs Kun Khalifat FC,Over r_25,2.9,0.32,45.8063931087114,5.0
+8737,Rivers United vs Kun Khalifat FC,Over r_35,9.28,0.086,45.8063931087114,5.0
+8737,Rivers United vs Kun Khalifat FC,BTTS,2.17,0.433,45.8063931087114,5.0
+8738,Shooting Stars vs Enugu Rangers International,Over r_15,1.39,0.687,46.141425266860146,5.0
+8738,Shooting Stars vs Enugu Rangers International,Over r_25,2.54,0.364,46.141425266860146,5.0
+8738,Shooting Stars vs Enugu Rangers International,Over r_35,7.52,0.11,46.141425266860146,5.0
+8738,Shooting Stars vs Enugu Rangers International,BTTS,2.19,0.431,46.141425266860146,5.0
+8736,Niger Tornadoes vs Wikki Tourists FC,Over r_15,1.55,0.608,39.13126141899681,5.0
+8736,Niger Tornadoes vs Wikki Tourists FC,Over r_25,3.18,0.29,39.13126141899681,5.0
+8736,Niger Tornadoes vs Wikki Tourists FC,Over r_35,10.74,0.071,39.13126141899681,5.0
+8736,Niger Tornadoes vs Wikki Tourists FC,BTTS,4.49,0.197,39.13126141899681,5.0
+8735,Kwara United vs Nasarawa United,Over r_15,1.68,0.561,37.61173288625742,5.0
+8735,Kwara United vs Nasarawa United,Over r_25,3.68,0.245,37.61173288625742,5.0
+8735,Kwara United vs Nasarawa United,Over r_35,13.54,0.052,37.61173288625742,5.0
+8735,Kwara United vs Nasarawa United,BTTS,3.23,0.283,37.61173288625742,5.0
+8734,Ikorodu City vs Warri Wolves FC,Over r_15,1.48,0.641,67.44776534694572,5.0
+8734,Ikorodu City vs Warri Wolves FC,Over r_25,2.9,0.32,67.44776534694572,5.0
+8734,Ikorodu City vs Warri Wolves FC,Over r_35,9.28,0.086,67.44776534694572,5.0
+8734,Ikorodu City vs Warri Wolves FC,BTTS,2.66,0.349,67.44776534694572,5.0
+8733,Enyimba vs Abia Warriors,Over r_15,1.59,0.592,47.993205289349646,5.0
+8733,Enyimba vs Abia Warriors,Over r_25,3.33,0.273,47.993205289349646,5.0
+8733,Enyimba vs Abia Warriors,Over r_35,11.59,0.065,47.993205289349646,5.0
+8733,Enyimba vs Abia Warriors,BTTS,5.17,0.17,47.993205289349646,5.0
+8732,El Kanemi Warriors vs Remo Stars,Over r_15,1.59,0.592,43.3968271437646,5.0
+8732,El Kanemi Warriors vs Remo Stars,Over r_25,3.33,0.273,43.3968271437646,5.0
+8732,El Kanemi Warriors vs Remo Stars,Over r_35,11.59,0.065,43.3968271437646,5.0
+8732,El Kanemi Warriors vs Remo Stars,BTTS,3.94,0.228,43.3968271437646,5.0
+8731,Bayelsa United FC vs Kano Pillars,Over r_15,1.68,0.561,42.32860744888814,5.0
+8731,Bayelsa United FC vs Kano Pillars,Over r_25,3.68,0.245,42.32860744888814,5.0
+8731,Bayelsa United FC vs Kano Pillars,Over r_35,13.54,0.052,42.32860744888814,5.0
+8731,Bayelsa United FC vs Kano Pillars,BTTS,8.82,0.091,42.32860744888814,5.0
+8730,Barau FC vs Katsina United,Over r_15,1.29,0.742,59.402730182150165,5.0
+8730,Barau FC vs Katsina United,Over r_25,2.18,0.432,59.402730182150165,5.0
+8730,Barau FC vs Katsina United,Over r_35,5.8,0.149,59.402730182150165,5.0
+8730,Barau FC vs Katsina United,BTTS,3.11,0.294,59.402730182150165,5.0
+7630,Athletico vs Botafogo,Over r_15,1.24,0.774,59.56705658399751,5.0
+7630,Athletico vs Botafogo,Over r_25,1.99,0.47,59.56705658399751,5.0
+7630,Athletico vs Botafogo,Over r_35,4.99,0.177,59.56705658399751,5.0
+7630,Athletico vs Botafogo,BTTS,1.55,0.61,59.56705658399751,5.0
+9064,Cayman Islands vs Bahamas,Over r_15,1.27,0.747,39.09459785485586,5.0
+9064,Cayman Islands vs Bahamas,Over r_25,2.12,0.441,39.09459785485586,5.0
+9064,Cayman Islands vs Bahamas,Over r_35,5.56,0.157,39.09459785485586,5.0
+9064,Cayman Islands vs Bahamas,BTTS,1.49,0.633,39.09459785485586,5.0
+9065,Cyprus vs Moldova,Over r_15,1.57,0.608,39.98357577653454,5.0
+9065,Cyprus vs Moldova,Over r_25,3.22,0.284,39.98357577653454,5.0
+9065,Cyprus vs Moldova,Over r_35,10.99,0.069,39.98357577653454,5.0
+9065,Cyprus vs Moldova,BTTS,2.26,0.412,39.98357577653454,5.0
+9072,Serbia vs Saudi Arabia,Over r_15,1.15,0.838,36.802603924769016,5.0
+9072,Serbia vs Saudi Arabia,Over r_25,1.66,0.567,36.802603924769016,5.0
+9072,Serbia vs Saudi Arabia,Over r_35,3.61,0.252,36.802603924769016,5.0
+9072,Serbia vs Saudi Arabia,BTTS,3.43,0.265,36.802603924769016,5.0
+9073,Norway vs Switzerland,Over r_15,1.15,0.838,60.11844482468326,5.0
+9073,Norway vs Switzerland,Over r_25,1.66,0.567,60.11844482468326,5.0
+9073,Norway vs Switzerland,Over r_35,3.61,0.252,60.11844482468326,5.0
+9073,Norway vs Switzerland,BTTS,2.94,0.313,60.11844482468326,5.0
+9081,South Africa vs Panama,Over r_15,1.3,0.739,38.33585586559074,5.0
+9081,South Africa vs Panama,Over r_25,2.2,0.423,38.33585586559074,5.0
+9081,South Africa vs Panama,Over r_35,5.92,0.145,38.33585586559074,5.0
+9081,South Africa vs Panama,BTTS,1.19,0.799,38.33585586559074,5.0
+9086,Croatia vs Brazil,Over r_15,1.15,0.838,49.01141440791615,5.0
+9086,Croatia vs Brazil,Over r_25,1.66,0.567,49.01141440791615,5.0
+9086,Croatia vs Brazil,Over r_35,3.61,0.252,49.01141440791615,5.0
+9086,Croatia vs Brazil,BTTS,2.56,0.364,49.01141440791615,5.0
+7080,Internacional vs São Paulo,Over r_15,1.29,0.742,54.540421113318374,5.0
+7080,Internacional vs São Paulo,Over r_25,2.18,0.432,54.540421113318374,5.0
+7080,Internacional vs São Paulo,Over r_35,5.8,0.149,54.540421113318374,5.0
+7080,Internacional vs São Paulo,BTTS,2.29,0.405,54.540421113318374,5.0
+7075,Botafogo vs Mirassol,Over r_15,1.13,0.852,45.270714335148796,5.0
+7075,Botafogo vs Mirassol,Over r_25,1.59,0.592,45.270714335148796,5.0
+7075,Botafogo vs Mirassol,Over r_35,3.33,0.273,45.270714335148796,5.0
+7075,Botafogo vs Mirassol,BTTS,1.2,0.797,45.270714335148796,5.0
+7078,Cruzeiro vs Vitória,Over r_15,1.11,0.871,45.33438645482064,5.0
+7078,Cruzeiro vs Vitória,Over r_25,1.52,0.628,45.33438645482064,5.0
+7078,Cruzeiro vs Vitória,Over r_35,3.03,0.303,45.33438645482064,5.0
+7078,Cruzeiro vs Vitória,BTTS,1.72,0.548,45.33438645482064,5.0
+7074,Bahia vs Athletico,Over r_15,1.23,0.77,48.39013496529628,5.0
+7074,Bahia vs Athletico,Over r_25,1.98,0.473,48.39013496529628,5.0
+7074,Bahia vs Athletico,Over r_35,4.94,0.179,48.39013496529628,5.0
+7074,Bahia vs Athletico,BTTS,1.96,0.483,48.39013496529628,5.0
+7077,Coritiba vs Vasco da Gama,Over r_15,1.45,0.658,44.33186226920762,5.0
+7077,Coritiba vs Vasco da Gama,Over r_25,2.77,0.334,44.33186226920762,5.0
+7077,Coritiba vs Vasco da Gama,Over r_35,8.64,0.094,44.33186226920762,5.0
+7077,Coritiba vs Vasco da Gama,BTTS,1.74,0.544,44.33186226920762,5.0
+7079,Fluminense vs Corinthians,Over r_15,1.34,0.718,44.206638021303974,5.0
+7079,Fluminense vs Corinthians,Over r_25,2.35,0.399,44.206638021303974,5.0
+7079,Fluminense vs Corinthians,Over r_35,6.59,0.129,44.206638021303974,5.0
+7079,Fluminense vs Corinthians,BTTS,2.22,0.421,44.206638021303974,5.0
+7076,Chapecoense vs Atlético Mineiro,Over r_15,1.15,0.83,38.50286750426978,5.0
+7076,Chapecoense vs Atlético Mineiro,Over r_25,1.68,0.561,38.50286750426978,5.0
+7076,Chapecoense vs Atlético Mineiro,Over r_35,3.68,0.245,38.50286750426978,5.0
+7076,Chapecoense vs Atlético Mineiro,BTTS,2.37,0.394,38.50286750426978,5.0
+7083,Santos vs Remo,Over r_15,1.19,0.797,50.673022386830446,5.0
+7083,Santos vs Remo,Over r_25,1.84,0.514,50.673022386830446,5.0
+7083,Santos vs Remo,Over r_35,4.32,0.206,50.673022386830446,5.0
+7083,Santos vs Remo,BTTS,1.5,0.637,50.673022386830446,5.0
+7081,Palmeiras vs Grêmio,Over r_15,1.14,0.842,51.814215552753865,5.0
+7081,Palmeiras vs Grêmio,Over r_25,1.64,0.581,51.814215552753865,5.0
+7081,Palmeiras vs Grêmio,Over r_35,3.5,0.259,51.814215552753865,5.0
+7081,Palmeiras vs Grêmio,BTTS,1.65,0.572,51.814215552753865,5.0
+7082,Red Bull Bragantino vs Flamengo,Over r_15,1.14,0.842,49.15355445241288,5.0
+7082,Red Bull Bragantino vs Flamengo,Over r_25,1.64,0.581,49.15355445241288,5.0
+7082,Red Bull Bragantino vs Flamengo,Over r_35,3.5,0.259,49.15355445241288,5.0
+7082,Red Bull Bragantino vs Flamengo,BTTS,1.52,0.628,49.15355445241288,5.0
+3849,Middlesbrough vs Millwall,Over r_15,1.45,0.658,53.69981261303239,5.0
+3849,Middlesbrough vs Millwall,Over r_25,2.77,0.334,53.69981261303239,5.0
+3849,Middlesbrough vs Millwall,Over r_35,8.64,0.094,53.69981261303239,5.0
+3849,Middlesbrough vs Millwall,BTTS,1.77,0.535,53.69981261303239,5.0
+3856,West Bromwich Albion vs Wrexham,Over r_15,1.15,0.83,53.0499744228811,5.0
+3856,West Bromwich Albion vs Wrexham,Over r_25,1.68,0.561,53.0499744228811,5.0
+3856,West Bromwich Albion vs Wrexham,Over r_35,3.68,0.245,53.0499744228811,5.0
+3856,West Bromwich Albion vs Wrexham,BTTS,2.06,0.457,53.0499744228811,5.0
+3845,Birmingham City vs Blackburn Rovers,Over r_15,1.29,0.742,40.339382308629375,5.0
+3845,Birmingham City vs Blackburn Rovers,Over r_25,2.18,0.432,40.339382308629375,5.0
+3845,Birmingham City vs Blackburn Rovers,Over r_35,5.8,0.149,40.339382308629375,5.0
+3845,Birmingham City vs Blackburn Rovers,BTTS,1.62,0.588,40.339382308629375,5.0
+3850,Norwich City vs Portsmouth,Over r_15,1.18,0.812,36.476691831862574,5.0
+3850,Norwich City vs Portsmouth,Over r_25,1.78,0.528,36.476691831862574,5.0
+3850,Norwich City vs Portsmouth,Over r_35,4.09,0.218,36.476691831862574,5.0
+3850,Norwich City vs Portsmouth,BTTS,1.37,0.689,36.476691831862574,5.0
+3846,Charlton Athletic vs Bristol City,Over r_15,1.59,0.592,47.98160758510671,5.0
+3846,Charlton Athletic vs Bristol City,Over r_25,3.33,0.273,47.98160758510671,5.0
+3846,Charlton Athletic vs Bristol City,Over r_35,11.59,0.065,47.98160758510671,5.0
+3846,Charlton Athletic vs Bristol City,BTTS,1.93,0.485,47.98160758510671,5.0
+3851,Oxford United vs Hull City,Over r_15,1.42,0.673,39.99198644115957,5.0
+3851,Oxford United vs Hull City,Over r_25,2.65,0.348,39.99198644115957,5.0
+3851,Oxford United vs Hull City,Over r_35,8.05,0.101,39.99198644115957,5.0
+3851,Oxford United vs Hull City,BTTS,1.56,0.607,39.99198644115957,5.0
+3853,Sheffield United vs Swansea City,Over r_15,1.16,0.817,40.658861194972346,5.0
+3853,Sheffield United vs Swansea City,Over r_25,1.73,0.546,40.658861194972346,5.0
+3853,Sheffield United vs Swansea City,Over r_35,3.88,0.232,40.658861194972346,5.0
+3853,Sheffield United vs Swansea City,BTTS,1.57,0.604,40.658861194972346,5.0
+3855,Stoke City vs Sheffield Wednesday,Over r_15,1.13,0.852,54.17414384646237,5.0
+3855,Stoke City vs Sheffield Wednesday,Over r_25,1.59,0.592,54.17414384646237,5.0
+3855,Stoke City vs Sheffield Wednesday,Over r_35,3.33,0.273,54.17414384646237,5.0
+3855,Stoke City vs Sheffield Wednesday,BTTS,1.43,0.666,54.17414384646237,5.0
+3848,Leicester City vs Preston North End,Over r_15,1.15,0.83,38.63942906653237,5.0
+3848,Leicester City vs Preston North End,Over r_25,1.68,0.561,38.63942906653237,5.0
+3848,Leicester City vs Preston North End,Over r_35,3.68,0.245,38.63942906653237,5.0
+3848,Leicester City vs Preston North End,BTTS,1.95,0.486,38.63942906653237,5.0
+3852,Queens Park Rangers vs Watford,Over r_15,1.07,0.895,47.6719799577391,5.0
+3852,Queens Park Rangers vs Watford,Over r_25,1.39,0.687,47.6719799577391,5.0
+3852,Queens Park Rangers vs Watford,Over r_35,2.54,0.364,47.6719799577391,5.0
+3852,Queens Park Rangers vs Watford,BTTS,1.29,0.734,47.6719799577391,5.0
+631,Gil Vicente vs AVS - Futebol SAD,Over r_15,1.12,0.862,57.23024365243838,5.0
+631,Gil Vicente vs AVS - Futebol SAD,Over r_25,1.55,0.608,57.23024365243838,5.0
+631,Gil Vicente vs AVS - Futebol SAD,Over r_35,3.18,0.29,57.23024365243838,5.0
+631,Gil Vicente vs AVS - Futebol SAD,BTTS,1.62,0.582,57.23024365243838,5.0
+4761,Al-Kholood vs Al-Khaleej,Over r_15,1.06,0.899,34.54616028228659,5.0
+4761,Al-Kholood vs Al-Khaleej,Over r_25,1.36,0.7,34.54616028228659,5.0
+4761,Al-Kholood vs Al-Khaleej,Over r_35,2.44,0.38,34.54616028228659,5.0
+4761,Al-Kholood vs Al-Khaleej,BTTS,1.49,0.634,34.54616028228659,5.0
+4760,Al-Ittihad vs Al-Hazem,Over r_15,1.31,0.727,40.330900345032425,5.0
+4760,Al-Ittihad vs Al-Hazem,Over r_25,2.26,0.414,40.330900345032425,5.0
+4760,Al-Ittihad vs Al-Hazem,Over r_35,6.18,0.139,40.330900345032425,5.0
+4760,Al-Ittihad vs Al-Hazem,BTTS,1.77,0.536,40.330900345032425,5.0
+6545,Lokomotiv Plovdiv vs Lokomotiv Sofia,Over r_15,1.19,0.797,38.91699854414899,5.0
+6545,Lokomotiv Plovdiv vs Lokomotiv Sofia,Over r_25,1.84,0.514,38.91699854414899,5.0
+6545,Lokomotiv Plovdiv vs Lokomotiv Sofia,Over r_35,4.32,0.206,38.91699854414899,5.0
+6545,Lokomotiv Plovdiv vs Lokomotiv Sofia,BTTS,3.14,0.294,38.91699854414899,5.0
+635,Vitória SC vs Tondela,Over r_15,1.21,0.788,43.48310747990318,5.0
+635,Vitória SC vs Tondela,Over r_25,1.9,0.498,43.48310747990318,5.0
+635,Vitória SC vs Tondela,Over r_35,4.57,0.194,43.48310747990318,5.0
+635,Vitória SC vs Tondela,BTTS,1.54,0.611,43.48310747990318,5.0

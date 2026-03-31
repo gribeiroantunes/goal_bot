@@ -1,0 +1,29 @@
+[
+  {
+    "fixture_id": 1002,
+    "market": "Under 11.5 Escanteios",
+    "actual_corners": 12,
+    "lambda_total": 0.0,
+    "won": false,
+    "error_type": "modeling_failure_or_extreme_variance",
+    "timestamp": "2026-03-28T21:41:16.641089"
+  },
+  {
+    "fixture_id": 1004,
+    "market": "Under 11.5 Escanteios",
+    "actual_corners": 9,
+    "lambda_total": 0.0,
+    "won": true,
+    "error_type": "modeling_failure_or_extreme_variance",
+    "timestamp": "2026-03-28T21:41:16.642091"
+  },
+  {
+    "fixture_id": 1005,
+    "market": "Under 11.5 Escanteios",
+    "actual_corners": 11,
+    "lambda_total": 0.0,
+    "won": true,
+    "error_type": "modeling_failure_or_extreme_variance",
+    "timestamp": "2026-03-28T21:41:16.643088"
+  }
+]

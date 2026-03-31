@@ -1,0 +1,14 @@
+{
+  "initial_bankroll": 1000.0,
+  "current_bankroll": 1143.2644196857743,
+  "peak_bankroll": 1143.2644196857743,
+  "daily_exposure": 0.0682,
+  "daily_bets": 3,
+  "total_bets": 100,
+  "total_wins": 61,
+  "total_losses": 39,
+  "current_drawdown": -0.0038879999999999956,
+  "system_paused": false,
+  "pause_reason": "",
+  "last_updated": "2026-03-28T21:41:33.100118"
+}
