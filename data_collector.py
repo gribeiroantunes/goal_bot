@@ -39,7 +39,7 @@ def get_events_week(days_ahead: int = 7):
     data = safe_get(f"{BASE_URL}/events/", params)
     events = data.get("results", [])
 
-    logger.info(f"Eventos válidos coletados da API: {len(events)}")
+    logger.info(f"Eventos coletados: {len(events)}")
     return events
 
 
@@ -51,15 +51,11 @@ def get_predictions():
     data = safe_get(f"{BASE_URL}/predictions/")
     preds = data.get("results", [])
 
-    logger.info(f"Previsões coletadas: {len(preds)} jogos")
+    logger.info(f"Previsões coletadas: {len(preds)}")
     return preds
 
 
 def enrich_event(event):
-    """
-    Enriquecimento leve (não depende de dados perfeitos)
-    """
-
     stats = event.get("stats", {}) or {}
 
     event["home_avg_goals_scored"] = stats.get("home_avg_goals_scored", 1.3)
@@ -87,16 +83,13 @@ def merge_events_predictions(events, predictions):
     }
 
     for e in events:
-        eid = e.get("id")
-        pred = pred_map.get(eid)
+        pred = pred_map.get(e.get("id"))
 
         if pred:
-            enriched_event = enrich_event(e)
-
             merged.append({
-                "event": enriched_event,
+                "event": enrich_event(e),
                 "prediction": pred
             })
 
-    logger.info(f"Eventos processados com forecasts: {len(merged)}")
+    logger.info(f"Eventos com previsão: {len(merged)}")
     return merged
