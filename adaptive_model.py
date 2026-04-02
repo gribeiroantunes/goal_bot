@@ -1,27 +1,46 @@
 # adaptive_model.py
 
 from history_manager import load_history
-from config import MIN_GAMES_FOR_LEARNING
+from config import MIN_GAMES_FOR_LEARNING, MIN_LEAGUE_PERFORMANCE
 
 
-def get_performance(key, value):
+def filter_data(key, value):
     data = load_history()
+    return [x for x in data if x.get(key) == value and x["result"] != "pending"]
 
-    filtered = [
-        x for x in data
-        if x.get(key) == value and x.get("result") != "pending"
-    ]
 
-    if len(filtered) < MIN_GAMES_FOR_LEARNING:
+def win_rate(data):
+    if len(data) == 0:
+        return 0.5
+    wins = sum(1 for x in data if x["result"] == "win")
+    return wins / len(data)
+
+
+def get_league_performance(league):
+    data = filter_data("league", league)
+
+    if len(data) < MIN_GAMES_FOR_LEARNING:
         return 0.5
 
-    wins = sum(1 for x in filtered if x["result"] == "win")
-    return wins / len(filtered)
+    return win_rate(data)
+
+
+def get_market_performance(market):
+    data = filter_data("market", market)
+
+    if len(data) < MIN_GAMES_FOR_LEARNING:
+        return 0.5
+
+    return win_rate(data)
 
 
 def adjust_probability(base_prob, league, market):
-    league_perf = get_performance("league", league)
-    market_perf = get_performance("market", market)
+    league_perf = get_league_performance(league)
+    market_perf = get_market_performance(market)
+
+    # corta liga ruim automaticamente
+    if league_perf < MIN_LEAGUE_PERFORMANCE:
+        return 0  # bloqueia aposta
 
     adjusted = (
         base_prob * 0.6 +
