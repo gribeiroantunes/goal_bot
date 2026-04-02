@@ -1,7 +1,9 @@
 name: Goal Bots
 
 on:
-  workflow_dispatch:  # 🔥 permite rodar manualmente
+  workflow_dispatch:  # 🔥 manual
+  schedule:
+    - cron: '0 12 * * *'  # ⏰ 09:00 horário de São Paulo (UTC-3)
 
 jobs:
   run:
