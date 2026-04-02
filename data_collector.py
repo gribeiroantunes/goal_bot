@@ -1,95 +1,43 @@
-# data_collector.py
-import os
 import requests
-import logging
-from datetime import date, timedelta
 
-logger = logging.getLogger("data_collector")
-
-API_KEY = os.environ.get("BZ_API_KEY", "")
-BASE_URL = "https://sports.bzzoiro.com/api"
-HEADERS = {"Authorization": f"Token {API_KEY}"} if API_KEY else {}
-
-TIMEOUT = 10
+API_URL = "https://api.football-data-api.com/todays-matches"  # exemplo
 
 
-def safe_get(url, params=None):
+def get_matches():
+    """
+    Retorna lista de jogos no formato padrão do modelo
+    """
+
     try:
-        r = requests.get(url, headers=HEADERS, params=params, timeout=TIMEOUT)
-        r.raise_for_status()
-        return r.json()
-    except requests.RequestException as e:
-        logger.error(f"Erro na requisição {url}: {e}")
-        return {}
-
-
-def get_events_week(days_ahead: int = 7):
-    if not API_KEY:
-        logger.error("API key não configurada.")
+        response = requests.get(API_URL)
+        data = response.json()
+    except Exception as e:
+        print(f"Erro ao buscar dados: {e}")
         return []
 
-    start = date.today()
-    end = start + timedelta(days=days_ahead)
+    matches = []
 
-    params = {
-        "date_from": start.isoformat(),
-        "date_to": end.isoformat()
-    }
+    for game in data.get("data", []):
+        try:
+            home = {
+                "avg_goals_scored": game["home_team"]["avg_goals_scored"],
+                "avg_goals_conceded": game["home_team"]["avg_goals_conceded"]
+            }
 
-    data = safe_get(f"{BASE_URL}/events/", params)
-    events = data.get("results", [])
+            away = {
+                "avg_goals_scored": game["away_team"]["avg_goals_scored"],
+                "avg_goals_conceded": game["away_team"]["avg_goals_conceded"]
+            }
 
-    logger.info(f"Eventos coletados: {len(events)}")
-    return events
+            league = game.get("league", "default")
 
-
-def get_predictions():
-    if not API_KEY:
-        logger.error("API key não configurada.")
-        return []
-
-    data = safe_get(f"{BASE_URL}/predictions/")
-    preds = data.get("results", [])
-
-    logger.info(f"Previsões coletadas: {len(preds)}")
-    return preds
-
-
-def enrich_event(event):
-    stats = event.get("stats", {}) or {}
-
-    event["home_avg_goals_scored"] = stats.get("home_avg_goals_scored", 1.3)
-    event["away_avg_goals_scored"] = stats.get("away_avg_goals_scored", 1.2)
-
-    event["home_avg_goals_conceded"] = stats.get("home_avg_goals_conceded", 1.2)
-    event["away_avg_goals_conceded"] = stats.get("away_avg_goals_conceded", 1.3)
-
-    event["home_goal_variance"] = stats.get("home_goal_variance", 1.5)
-    event["away_goal_variance"] = stats.get("away_goal_variance", 1.5)
-
-    event["btts_freq"] = stats.get("btts_freq", 0.5)
-    event["over_35_freq"] = stats.get("over_35_freq", 0.35)
-
-    return event
-
-
-def merge_events_predictions(events, predictions):
-    merged = []
-
-    pred_map = {
-        p.get("event", {}).get("id"): p
-        for p in predictions
-        if p.get("event", {}).get("id")
-    }
-
-    for e in events:
-        pred = pred_map.get(e.get("id"))
-
-        if pred:
-            merged.append({
-                "event": enrich_event(e),
-                "prediction": pred
+            matches.append({
+                "home": home,
+                "away": away,
+                "league": league
             })
 
-    logger.info(f"Eventos com previsão: {len(merged)}")
-    return merged
+        except KeyError:
+            continue
+
+    return matches
