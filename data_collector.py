@@ -2,81 +2,52 @@ import requests
 import os
 
 API_KEY = os.getenv("BZ_API_KEY")
-BASE_URL = "https://api.sports.bzzoiro.com"
+BASE_URL = "https://sports.bzzoiro.com/api"
 
 
-def get_last_matches(team_id):
-    url = f"{BASE_URL}/team/{team_id}/matches"
-
+def get_predictions():
     headers = {
-        "Authorization": f"Bearer {API_KEY}"
+        "Authorization": f"Token {API_KEY}"
     }
 
     try:
-        res = requests.get(url, headers=headers)
-        data = res.json()
-    except:
+        response = requests.get(f"{BASE_URL}/predictions/", headers=headers)
+        data = response.json()
+    except Exception as e:
+        print(f"Erro API: {e}")
         return []
 
-    return data.get("matches", [])[:5]  # últimos 5 jogos
-
-
-def calculate_team_stats(matches):
-    goals_for = 0
-    goals_against = 0
-    total = len(matches)
-
-    if total == 0:
-        return 1.2, 1.2  # fallback
-
-    for m in matches:
-        try:
-            goals_for += m["goals_for"]
-            goals_against += m["goals_against"]
-        except:
-            continue
-
-    return goals_for / total, goals_against / total
+    return data.get("results", [])
 
 
 def get_matches():
-    url = f"{BASE_URL}/matches/today"
+    predictions = get_predictions()
 
-    headers = {
-        "Authorization": f"Bearer {API_KEY}"
-    }
+    bets = []
 
-    try:
-        res = requests.get(url, headers=headers)
-        data = res.json()
-    except:
-        return []
-
-    matches = []
-
-    for game in data.get("matches", []):
+    for p in predictions:
         try:
-            home_id = game["home_id"]
-            away_id = game["away_id"]
+            event = p["event"]
 
-            home_last = get_last_matches(home_id)
-            away_last = get_last_matches(away_id)
+            # 🔥 OVER 2.5
+            if p.get("prob_over_25"):
+                bets.append({
+                    "type": "over_2.5",
+                    "prob": p["prob_over_25"] / 100,
+                    "confidence": p["confidence"],
+                    "teams": f"{event['home_team']} vs {event['away_team']}"
+                })
 
-            home_for, home_against = calculate_team_stats(home_last)
-            away_for, away_against = calculate_team_stats(away_last)
-
-            matches.append({
-                "home": {
-                    "avg_goals_scored": home_for,
-                    "avg_goals_conceded": home_against
-                },
-                "away": {
-                    "avg_goals_scored": away_for,
-                    "avg_goals_conceded": away_against
-                }
-            })
+            # 🔥 BTTS
+            if p.get("prob_btts_yes"):
+                bets.append({
+                    "type": "btts",
+                    "prob": p["prob_btts_yes"] / 100,
+                    "confidence": p["confidence"],
+                    "teams": f"{event['home_team']} vs {event['away_team']}"
+                })
 
         except:
             continue
 
-    return matches
+    return bets
