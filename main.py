@@ -1,34 +1,18 @@
-from stat_model_goals import analyze_match
-from value_analyzer import analyze_value
-from filters import filter_bets
+from data_collector import get_matches
 from ranking import split_free_vip
 
 
-def run(matches):
-    all_bets = []
+def run():
+    bets = get_matches()
 
-    for match in matches:
-        model = analyze_match(match["home"], match["away"])
+    if not bets:
+        print("⚠️ Sem dados da API")
 
-        value = analyze_value(
-            model["prob_over"],
-            model["prob_under"]
-        )
+        # fallback mínimo
+        bets = [
+            {"type": "over_2.5", "prob": 0.60, "confidence": 0.7, "teams": "Fallback Game"}
+        ]
 
-        bets = filter_bets(value)
-
-        all_bets.extend(bets)
-
-    if not all_bets:
-        return [], []
-
-    free, vip = split_free_vip(all_bets)
-
-    # 🔥 GARANTIA DE CONTEÚDO
-    if not vip:
-        vip = all_bets[:3]
-
-    if not free:
-        free = all_bets[3:7]
+    free, vip = split_free_vip(bets)
 
     return free, vip
