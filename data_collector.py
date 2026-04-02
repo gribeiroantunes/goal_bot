@@ -1,43 +1,82 @@
 import requests
+import os
 
-API_URL = "https://api.football-data-api.com/todays-matches"  # exemplo
+API_KEY = os.getenv("BZ_API_KEY")
+BASE_URL = "https://api.sports.bzzoiro.com"
+
+
+def get_last_matches(team_id):
+    url = f"{BASE_URL}/team/{team_id}/matches"
+
+    headers = {
+        "Authorization": f"Bearer {API_KEY}"
+    }
+
+    try:
+        res = requests.get(url, headers=headers)
+        data = res.json()
+    except:
+        return []
+
+    return data.get("matches", [])[:5]  # últimos 5 jogos
+
+
+def calculate_team_stats(matches):
+    goals_for = 0
+    goals_against = 0
+    total = len(matches)
+
+    if total == 0:
+        return 1.2, 1.2  # fallback
+
+    for m in matches:
+        try:
+            goals_for += m["goals_for"]
+            goals_against += m["goals_against"]
+        except:
+            continue
+
+    return goals_for / total, goals_against / total
 
 
 def get_matches():
-    """
-    Retorna lista de jogos no formato padrão do modelo
-    """
+    url = f"{BASE_URL}/matches/today"
+
+    headers = {
+        "Authorization": f"Bearer {API_KEY}"
+    }
 
     try:
-        response = requests.get(API_URL)
-        data = response.json()
-    except Exception as e:
-        print(f"Erro ao buscar dados: {e}")
+        res = requests.get(url, headers=headers)
+        data = res.json()
+    except:
         return []
 
     matches = []
 
-    for game in data.get("data", []):
+    for game in data.get("matches", []):
         try:
-            home = {
-                "avg_goals_scored": game["home_team"]["avg_goals_scored"],
-                "avg_goals_conceded": game["home_team"]["avg_goals_conceded"]
-            }
+            home_id = game["home_id"]
+            away_id = game["away_id"]
 
-            away = {
-                "avg_goals_scored": game["away_team"]["avg_goals_scored"],
-                "avg_goals_conceded": game["away_team"]["avg_goals_conceded"]
-            }
+            home_last = get_last_matches(home_id)
+            away_last = get_last_matches(away_id)
 
-            league = game.get("league", "default")
+            home_for, home_against = calculate_team_stats(home_last)
+            away_for, away_against = calculate_team_stats(away_last)
 
             matches.append({
-                "home": home,
-                "away": away,
-                "league": league
+                "home": {
+                    "avg_goals_scored": home_for,
+                    "avg_goals_conceded": home_against
+                },
+                "away": {
+                    "avg_goals_scored": away_for,
+                    "avg_goals_conceded": away_against
+                }
             })
 
-        except KeyError:
+        except:
             continue
 
     return matches
