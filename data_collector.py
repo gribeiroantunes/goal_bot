@@ -9,10 +9,7 @@ def get_predictions():
     if not API_KEY:
         raise ValueError("BZ_API_KEY não encontrada no ambiente")
 
-    headers = {
-        "Authorization": f"Token {API_KEY}"
-    }
-
+    headers = {"Authorization": f"Token {API_KEY}"}
     all_preds = []
     url = f"{BASE_URL}/predictions/?tz=America/Sao_Paulo"
 
@@ -48,4 +45,25 @@ def get_matches():
             teams = f"{event['home_team']} vs {event['away_team']}"
 
             prob_over_25 = p.get("prob_over_25")
-            if prob_over_25 is not None 
+            if prob_over_25 is not None and prob_over_25 > 55:
+                bets.append({
+                    "type": "over_2.5",
+                    "prob": prob_over_25 / 100,
+                    "confidence": confidence,
+                    "teams": teams
+                })
+
+            prob_btts_yes = p.get("prob_btts_yes")
+            if prob_btts_yes is not None and prob_btts_yes > 55:
+                bets.append({
+                    "type": "btts",
+                    "prob": prob_btts_yes / 100,
+                    "confidence": confidence,
+                    "teams": teams
+                })
+
+        except (KeyError, TypeError, ValueError):
+            continue
+
+    print(f"Total bets geradas: {len(bets)}")
+    return bets
