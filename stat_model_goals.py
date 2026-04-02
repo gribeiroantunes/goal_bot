@@ -4,7 +4,11 @@ from scipy.stats import poisson
 HOME_ADVANTAGE = 0.15
 LEAGUE_AVG_GOALS = 2.5
 
+FORM_WEIGHT = 0.7
 
+def adjust_form(avg, recent):
+    return (avg * (1 - FORM_WEIGHT)) + (recent * FORM_WEIGHT)
+    
 def calculate_lambda(home, away):
     attack_home = home["avg_goals_scored"] / LEAGUE_AVG_GOALS
     defense_home = home["avg_goals_conceded"] / LEAGUE_AVG_GOALS
