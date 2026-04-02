@@ -13,3 +13,6 @@ EV_MIN_FREE = 0.05
 EV_MIN_VIP = 0.10
 
 MIN_GAMES_FOR_LEARNING = 10
+
+# corte automático de ligas ruins
+MIN_LEAGUE_PERFORMANCE = 0.48
