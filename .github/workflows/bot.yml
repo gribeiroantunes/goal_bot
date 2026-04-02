@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-bot:
+  run-bots:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,17 +23,33 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: ⚙️ Criar arquivos de estado (se não existirem)
+      - name: ⚙️ Garantir arquivos de estado
         run: |
           touch bet_history.json
           touch bankroll_state.json
           touch learning_insights.json
           touch line_movement_log.json
 
-      - name: 🚀 Rodar BOT (FREE + VIP)
+      - name: 🔍 Debug estrutura (caso dê erro)
+        run: |
+          echo "Estrutura do projeto:"
+          ls -R
+
+      - name: 🟢 Rodar BOT FREE
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID_FREE: ${{ secrets.TELEGRAM_CHAT_ID_FREE }}
+        run: |
+          echo "Iniciando BOT FREE..."
+          python bot_free.py
+
+      - name: 🔴 Rodar BOT VIP
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID_VIP: ${{ secrets.TELEGRAM_CHAT_ID_VIP }}
         run: |
-          python bot.py
+          echo "Iniciando BOT VIP..."
+          python vip_bot.py
+
+      - name: ✅ Finalizado
+        run: echo "Bots executados com sucesso!"
