@@ -1,75 +1,53 @@
-# bot_free.py
-
 import os
-import asyncio
+from main import run
+from data_collector import get_matches
 from telegram import Bot
 
-from adaptive_model import adjust_probability
-from value_calculator import estimate_ev, calculate_score
-from history_manager import add_bet
-from config import EV_MIN_FREE
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = -1003725207734
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID_FREE")
 
 
-def get_games():
-    # 👉 substitua pelo seu coletor real
-    return [
-        {
-            "id": "1",
-            "league": "EPL",
-            "market": "over_2_5",
-            "prob": 0.65,
-            "home": "Team A",
-            "away": "Team B"
-        }
-    ]
-
-
-def select_bets(games):
-    bets = []
-
-    for game in games:
-        base_prob = game["prob"]
-
-        adj_prob = adjust_probability(base_prob, game["league"], game["market"])
-
-        if adj_prob == 0:
-            continue  # liga ruim
-
-        ev = estimate_ev(adj_prob, game["market"])
-        boost = adj_prob - base_prob
-        score = calculate_score(adj_prob, ev, boost)
-
-        if ev > EV_MIN_FREE and score > 0.60:
-            game["prob"] = adj_prob
-            game["ev"] = ev
-
-            bets.append(game)
-            add_bet(game)
-
-    return bets
-
-
-def format_msg(g):
+def format_bet_message(bet):
     return (
-        f"⚽ {g['home']} vs {g['away']}\n"
-        f"📊 {g['market']}\n"
-        f"📈 Prob: {g['prob']:.2%}\n"
-        f"💰 EV: {g['ev']:.2f}"
+        f"📊 Oportunidade FREE\n\n"
+        f"➡️ Tipo: {bet['type'].upper()}\n"
+        f"📈 Probabilidade: {bet['prob']:.2%}\n"
+        f"💰 Odds estimadas: {bet['odds']}\n"
+        f"📊 EV: {bet['ev']:.2f}\n"
     )
 
 
-async def main():
-    bot = Bot(token=TELEGRAM_TOKEN)
+def send_telegram(messages):
+    bot = Bot(token=TOKEN)
 
-    games = get_games()
-    bets = select_bets(games)
+    for msg in messages:
+        bot.send_message(chat_id=CHAT_ID, text=msg)
 
-    for b in bets:
-        await bot.send_message(CHANNEL_ID, format_msg(b))
+
+def main():
+    print("🔎 Coletando jogos...")
+    matches = get_matches()
+
+    if not matches:
+        print("⚠️ Nenhum jogo encontrado.")
+        return
+
+    print("🧠 Processando modelo...")
+    free, _ = run(matches)
+
+    if not free:
+        print("⚠️ Nenhuma oportunidade FREE encontrada.")
+        return
+
+    print(f"📤 Enviando {len(free)} apostas FREE...")
+
+    messages = [format_bet_message(bet) for bet in free]
+
+    send_telegram(messages)
+
+    print("✅ BOT FREE finalizado com sucesso!")
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
