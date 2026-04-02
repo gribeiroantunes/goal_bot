@@ -4,7 +4,7 @@ from data_collector import get_matches
 from telegram import Bot
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID_VIP")
+from config import TELEGRAM_CHAT_ID_VIP as CHAT_ID
 
 
 def format_msg(bet):
