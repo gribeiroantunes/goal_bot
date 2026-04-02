@@ -4,7 +4,7 @@ import json
 import os
 from datetime import datetime
 from config import HISTORY_FILE
-
+HISTORY_FILE = "history.json"
 
 def load_history():
     if not os.path.exists(HISTORY_FILE):
