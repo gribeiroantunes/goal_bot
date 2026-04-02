@@ -51,6 +51,7 @@ def get_matches():
                     "prob": prob_over_25 / 100,
                     "confidence": confidence,
                     "teams": teams
+                    "event_date": event.get("event_date")
                 })
 
             prob_btts_yes = p.get("prob_btts_yes")
@@ -60,6 +61,7 @@ def get_matches():
                     "prob": prob_btts_yes / 100,
                     "confidence": confidence,
                     "teams": teams
+                    "event_date": event.get("event_date")
                 })
 
         except (KeyError, TypeError, ValueError):
