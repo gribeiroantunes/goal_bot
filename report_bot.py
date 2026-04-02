@@ -5,7 +5,7 @@ from telegram import Bot
 from history_manager import load_history
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = os.getenv("TELEGRAM_CHAT_ID_FREE") or -1003725207734
+CHANNEL_ID = os.getenv("TELEGRAM_CHAT_ID_FREE")
 VIP_LINK = os.getenv("VIP_LINK", "https://t.me/seu_link_vip_aqui")
 
 
@@ -18,12 +18,14 @@ def parse_date(value):
 
 def last_7_days(data):
     cutoff = datetime.now() - timedelta(days=7)
-    return [
-        x for x in data
-        if parse_date(x.get("date", "")) is not None
-        and parse_date(x["date"]) >= cutoff
-        and x.get("result") != "pending"
-    ]
+    recent = []
+    for x in data:
+        d = parse_date(x.get("date", ""))
+        if d is None:
+            continue
+        if d >= cutoff and x.get("result") != "pending":
+            recent.append(x)
+    return recent
 
 
 def stats(data):
@@ -38,6 +40,8 @@ def stats(data):
 def main():
     if not TELEGRAM_TOKEN:
         raise ValueError("TELEGRAM_TOKEN não encontrado no ambiente")
+    if not CHANNEL_ID:
+        raise ValueError("TELEGRAM_CHAT_ID_FREE não encontrado no ambiente")
 
     bot = Bot(token=TELEGRAM_TOKEN)
 
