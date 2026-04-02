@@ -1,5 +1,4 @@
 import os
-import asyncio
 from datetime import datetime, timedelta
 from telegram import Bot
 
@@ -7,8 +6,7 @@ from history_manager import load_history
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHANNEL_ID = os.getenv("TELEGRAM_CHAT_ID_FREE") or -1003725207734
-
-VIP_LINK = "https://t.me/seu_link_vip_aqui"
+VIP_LINK = os.getenv("VIP_LINK", "https://t.me/seu_link_vip_aqui")
 
 
 def parse_date(value):
@@ -37,7 +35,7 @@ def stats(data):
     return wins, losses, acc, roi
 
 
-async def main():
+def main():
     if not TELEGRAM_TOKEN:
         raise ValueError("TELEGRAM_TOKEN não encontrado no ambiente")
 
@@ -58,8 +56,8 @@ async def main():
         f"{VIP_LINK}"
     )
 
-    await bot.send_message(chat_id=CHANNEL_ID, text=msg)
+    bot.send_message(chat_id=CHANNEL_ID, text=msg)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
