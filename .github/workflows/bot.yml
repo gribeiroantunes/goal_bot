@@ -12,7 +12,9 @@ jobs:
     env:
       BZ_API_KEY: ${{ secrets.BZ_API_KEY }}
       TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-      VIP_LINK: ${{ secrets.VIP_LINK }}
+      TELEGRAM_CHAT_ID_FREE: -1003725207734
+      TELEGRAM_CHAT_ID_VIP: -1003858302105
+      VIP_LINK: https://t.me/+ckOVtoDxOItmMzUx
 
     steps:
       - name: 📥 Clonar repositório
@@ -37,22 +39,16 @@ jobs:
           touch line_movement_log.json
 
       - name: 🟡 Rodar REPORT FREE
-        env:
-          TELEGRAM_CHAT_ID_FREE: ${{ secrets.TELEGRAM_CHAT_ID_FREE }}
         run: |
           echo "Iniciando REPORT FREE..."
           python report_bot.py
 
       - name: 🟢 Rodar BOT FREE
-        env:
-          TELEGRAM_CHAT_ID_FREE: ${{ secrets.TELEGRAM_CHAT_ID_FREE }}
         run: |
           echo "Iniciando BOT FREE..."
           python bot_free.py
 
       - name: 🔴 Rodar BOT VIP
-        env:
-          TELEGRAM_CHAT_ID_VIP: ${{ secrets.TELEGRAM_CHAT_ID_VIP }}
         run: |
           echo "Iniciando BOT VIP..."
           python vip_bot.py
