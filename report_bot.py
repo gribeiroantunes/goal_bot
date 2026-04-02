@@ -21,9 +21,7 @@ def last_7_days(data):
     recent = []
     for x in data:
         d = parse_date(x.get("date", ""))
-        if d is None:
-            continue
-        if d >= cutoff and x.get("result") != "pending":
+        if d and d >= cutoff and x.get("result") != "pending":
             recent.append(x)
     return recent
 
@@ -44,10 +42,8 @@ def main():
         raise ValueError("TELEGRAM_CHAT_ID_FREE não encontrado no ambiente")
 
     bot = Bot(token=TELEGRAM_TOKEN)
-
     data = load_history()
     recent = last_7_days(data)
-
     w, l, acc, roi = stats(recent)
 
     msg = (
