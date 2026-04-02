@@ -24,4 +24,11 @@ def run(matches):
 
     free, vip = split_free_vip(all_bets)
 
+    # 🔥 GARANTIA DE CONTEÚDO
+    if not vip:
+        vip = all_bets[:3]
+
+    if not free:
+        free = all_bets[3:7]
+
     return free, vip
