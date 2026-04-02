@@ -50,7 +50,7 @@ def get_matches():
                     "type": "over_2.5",
                     "prob": prob_over_25 / 100,
                     "confidence": confidence,
-                    "teams": teams
+                    "teams": teams,
                     "event_date": event.get("event_date"),
                 })
 
@@ -60,7 +60,7 @@ def get_matches():
                     "type": "btts",
                     "prob": prob_btts_yes / 100,
                     "confidence": confidence,
-                    "teams": teams
+                    "teams": teams,
                     "event_date": event.get("event_date"),
                 })
 
