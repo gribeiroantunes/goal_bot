@@ -1,11 +1,14 @@
-import requests
 import os
+import requests
 
 API_KEY = os.getenv("BZ_API_KEY")
 BASE_URL = "https://sports.bzzoiro.com/api"
 
 
 def get_predictions():
+    if not API_KEY:
+        raise ValueError("BZ_API_KEY não encontrada no ambiente")
+
     headers = {
         "Authorization": f"Token {API_KEY}"
     }
@@ -15,16 +18,34 @@ def get_predictions():
 
     try:
         while url:
-            res = requests.get(url, headers=headers)
+            res = requests.get(url, headers=headers, timeout=20)
+            res.raise_for_status()
+
             data = res.json()
+            all_preds.extend(data.get("results", []))
+            url = data.get("next")
 
-            results = data.get("results", [])
-            all_preds.extend(results)
-
-            url = data.get("next")  # 🔥 pega próxima página
-
-    except Exception as e:
+    except requests.RequestException as e:
         print(f"Erro API: {e}")
+        return []
 
     print(f"Total predictions coletadas: {len(all_preds)}")
     return all_preds
+
+
+def get_matches():
+    predictions = get_predictions()
+    bets = []
+
+    for p in predictions:
+        try:
+            event = p["event"]
+            confidence = float(p.get("confidence", 0))
+
+            if confidence < 0.55:
+                continue
+
+            teams = f"{event['home_team']} vs {event['away_team']}"
+
+            prob_over_25 = p.get("prob_over_25")
+            if prob_over_25 is not None 
