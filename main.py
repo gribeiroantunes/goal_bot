@@ -4,25 +4,23 @@ from filters import filter_bets
 from ranking import split_free_vip
 
 
-def process_match(home, away, league="default"):
-    model = analyze_match(home, away, league)
-
-    value = analyze_value(
-        model["prob_over"],
-        model["prob_under"]
-    )
-
-    bets = filter_bets(value)
-
-    return bets
-
-
 def run(matches):
     all_bets = []
 
     for match in matches:
-        bets = process_match(match["home"], match["away"], match["league"])
+        model = analyze_match(match["home"], match["away"])
+
+        value = analyze_value(
+            model["prob_over"],
+            model["prob_under"]
+        )
+
+        bets = filter_bets(value)
+
         all_bets.extend(bets)
+
+    if not all_bets:
+        return [], []
 
     free, vip = split_free_vip(all_bets)
 
