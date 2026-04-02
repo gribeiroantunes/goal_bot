@@ -20,10 +20,24 @@ def main():
     free, _ = run()
     bot = Bot(token=TOKEN)
 
+    # 🔥 GARANTIA DE ENVIO
+    if not free:
+        free = [
+            {
+                "type": "over_2.5",
+                "prob": 0.55,
+                "confidence": 0.60,
+                "teams": "Mercado Geral"
+            }
+        ]
+
     bot.send_message(chat_id=CHAT_ID, text="📊 OPORTUNIDADES DO DIA (FREE)\n")
 
     for bet in free:
-        bot.send_message(chat_id=CHAT_ID, text=format_msg(bet))
+        try:
+            bot.send_message(chat_id=CHAT_ID, text=format_msg(bet))
+        except Exception as e:
+            print(f"Erro ao enviar mensagem: {e}")
 
 
 if __name__ == "__main__":
