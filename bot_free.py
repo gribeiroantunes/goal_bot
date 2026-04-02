@@ -4,29 +4,40 @@ import os
 import asyncio
 from telegram import Bot
 
-from value_calculator import estimate_ev, calculate_score
 from adaptive_model import adjust_probability
-from history_manager import add_bet, create_bet_entry
+from value_calculator import estimate_ev, calculate_score
+from history_manager import add_bet
 from config import EV_MIN_FREE
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = -100XXXXXXXXX  # ajuste
+CHANNEL_ID = -1003725207734
 
 
 def get_games():
-    # ⚠️ SUBSTITUIR pelo seu coletor real
+    # 👉 substitua pelo seu coletor real
     return [
-        {"id": "1", "league": "EPL", "market": "over_2_5", "prob": 0.65, "home": "A", "away": "B"}
+        {
+            "id": "1",
+            "league": "EPL",
+            "market": "over_2_5",
+            "prob": 0.65,
+            "home": "Team A",
+            "away": "Team B"
+        }
     ]
 
 
 def select_bets(games):
-    selected = []
+    bets = []
 
     for game in games:
         base_prob = game["prob"]
 
         adj_prob = adjust_probability(base_prob, game["league"], game["market"])
+
+        if adj_prob == 0:
+            continue  # liga ruim
+
         ev = estimate_ev(adj_prob, game["market"])
         boost = adj_prob - base_prob
         score = calculate_score(adj_prob, ev, boost)
@@ -35,18 +46,18 @@ def select_bets(games):
             game["prob"] = adj_prob
             game["ev"] = ev
 
-            selected.append(game)
-            add_bet(create_bet_entry(game))
+            bets.append(game)
+            add_bet(game)
 
-    return selected
+    return bets
 
 
-def format_msg(game):
+def format_msg(g):
     return (
-        f"⚽ {game['home']} vs {game['away']}\n"
-        f"📊 Mercado: {game['market']}\n"
-        f"📈 Prob: {game['prob']:.2%}\n"
-        f"💰 EV: {game['ev']:.2f}"
+        f"⚽ {g['home']} vs {g['away']}\n"
+        f"📊 {g['market']}\n"
+        f"📈 Prob: {g['prob']:.2%}\n"
+        f"💰 EV: {g['ev']:.2f}"
     )
 
 
@@ -56,8 +67,8 @@ async def main():
     games = get_games()
     bets = select_bets(games)
 
-    for bet in bets:
-        await bot.send_message(CHANNEL_ID, format_msg(bet))
+    for b in bets:
+        await bot.send_message(CHANNEL_ID, format_msg(b))
 
 
 if __name__ == "__main__":
