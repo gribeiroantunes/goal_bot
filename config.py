@@ -5,7 +5,7 @@
 # IDs dos grupos (OBRIGATÓRIO)
 TELEGRAM_CHAT_ID_FREE = -1003725207734
 TELEGRAM_CHAT_ID_VIP = -1003858302105
-
+HISTORY_FILE = "history.json"
 
 # =========================
 # ⚙️ MODELO ESTATÍSTICO
