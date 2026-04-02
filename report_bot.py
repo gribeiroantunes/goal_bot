@@ -1,61 +1,78 @@
+# report_bot.py
+
 import os
-import json
 import asyncio
 from datetime import datetime, timedelta
 from telegram import Bot
 
+from history_manager import load_history
+
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = -1003725207734
-VIP_LINK = "https://t.me/+ckOVtoDxOItmMzUx"
-HISTORY_FILE = "history.json"
+CHANNEL_ID = -100XXXXXXXXX
 
 
-def load_history():
-    if not os.path.exists(HISTORY_FILE):
-        return []
-
-    with open(HISTORY_FILE, "r") as f:
-        return json.load(f)
-
-
-def get_last_7_days(data):
+def last_7_days(data):
     cutoff = datetime.now() - timedelta(days=7)
-    return [x for x in data if datetime.strptime(x["date"], "%Y-%m-%d") >= cutoff]
+    return [
+        x for x in data
+        if datetime.strptime(x["date"], "%Y-%m-%d") >= cutoff
+        and x["result"] != "pending"
+    ]
 
 
-def calculate_stats(data):
-    wins = sum(1 for x in data if x.get("result") == "win")
-    losses = sum(1 for x in data if x.get("result") == "loss")
+def stats(data):
+    wins = sum(1 for x in data if x["result"] == "win")
+    losses = sum(1 for x in data if x["result"] == "loss")
     total = wins + losses
+
     acc = (wins / total * 100) if total > 0 else 0
-    return wins, losses, acc
+    roi = sum(x["ev"] for x in data)
+
+    return wins, losses, acc, roi
 
 
-def format_message(wins, losses, acc):
-    return (
-        f"📊 *RESULTADOS DOS ÚLTIMOS 7 DIAS*\n\n"
-        f"✅ Wins: {wins}\n"
-        f"❌ Losses: {losses}\n"
-        f"📈 Assertividade: {acc:.1f}%\n\n"
-        f"🔥 Método focado em consistência\n\n"
-        f"💎 Quer entrar no próximo nível?\n"
-        f"👉 Sinais com maior probabilidade\n"
-        f"👉 Gestão de 5% a 7%\n\n"
-        f"🚀 Entre no VIP:\n{VIP_LINK}"
-    )
+def best_league(data):
+    leagues = {}
+
+    for x in data:
+        lg = x["league"]
+        leagues.setdefault(lg, {"w": 0, "t": 0})
+
+        if x["result"] == "win":
+            leagues[lg]["w"] += 1
+
+        leagues[lg]["t"] += 1
+
+    best = "N/A"
+    best_rate = 0
+
+    for lg, val in leagues.items():
+        rate = val["w"] / val["t"]
+        if rate > best_rate:
+            best_rate = rate
+            best = lg
+
+    return best
 
 
 async def main():
     bot = Bot(token=TELEGRAM_TOKEN)
 
-    history = load_history()
-    recent = get_last_7_days(history)
+    data = load_history()
+    recent = last_7_days(data)
 
-    wins, losses, acc = calculate_stats(recent)
+    w, l, acc, roi = stats(recent)
+    best = best_league(recent)
 
-    msg = format_message(wins, losses, acc)
+    msg = (
+        f"📊 RESULTADOS 7 DIAS\n\n"
+        f"✅ {w}W | ❌ {l}L\n"
+        f"📈 {acc:.1f}%\n"
+        f"💰 ROI: {roi:.2f}\n\n"
+        f"🔥 Liga destaque: {best}"
+    )
 
-    await bot.send_message(CHANNEL_ID, msg, parse_mode="Markdown")
+    await bot.send_message(CHANNEL_ID, msg)
 
 
 if __name__ == "__main__":
