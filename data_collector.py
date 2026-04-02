@@ -41,15 +41,18 @@ def get_matches():
             teams = f"{event['home_team']} vs {event['away_team']}"
             event_date = event.get("event_date")
 
-            market_map = [
+            candidates = [
                 ("over_1.5", p.get("prob_over_15")),
                 ("over_2.5", p.get("prob_over_25")),
                 ("over_3.5", p.get("prob_over_35")),
                 ("btts", p.get("prob_btts_yes")),
+                ("home_win", p.get("prob_home_win")),
+                ("draw", p.get("prob_draw")),
+                ("away_win", p.get("prob_away_win")),
             ]
 
-            for mtype, prob in market_map:
-                if prob is not None and float(prob) > 55:
+            for mtype, prob in candidates:
+                if prob is not None and float(prob) >= 58:
                     bets.append({
                         "type": mtype,
                         "prob": float(prob) / 100,
@@ -58,57 +61,46 @@ def get_matches():
                         "event_date": event_date,
                     })
 
-            under_candidates = []
             prob_over_15 = p.get("prob_over_15")
             prob_over_25 = p.get("prob_over_25")
             prob_over_35 = p.get("prob_over_35")
-
-            if prob_over_15 is not None:
-                under_candidates.append(("under_1.5", 100 - float(prob_over_15)))
-            if prob_over_25 is not None:
-                under_candidates.append(("under_2.5", 100 - float(prob_over_25)))
-            if prob_over_35 is not None:
-                under_candidates.append(("under_3.5", 100 - float(prob_over_35)))
-
-            for mtype, prob in under_candidates:
-                if prob > 55:
-                    bets.append({
-                        "type": mtype,
-                        "prob": prob / 100,
-                        "confidence": confidence,
-                        "teams": teams,
-                        "event_date": event_date,
-                    })
-
             prob_btts_yes = p.get("prob_btts_yes")
-            if prob_btts_yes is not None:
-                no_btts_prob = 100 - float(prob_btts_yes)
-                if no_btts_prob > 55:
-                    bets.append({
-                        "type": "no_btts",
-                        "prob": no_btts_prob / 100,
-                        "confidence": confidence,
-                        "teams": teams,
-                        "event_date": event_date,
-                    })
 
-            prob_home = p.get("prob_home_win")
-            prob_draw = p.get("prob_draw")
-            prob_away = p.get("prob_away_win")
+            if prob_over_15 is not None and (100 - float(prob_over_15)) >= 58:
+                bets.append({
+                    "type": "under_1.5",
+                    "prob": (100 - float(prob_over_15)) / 100,
+                    "confidence": confidence,
+                    "teams": teams,
+                    "event_date": event_date,
+                })
 
-            for mtype, prob in [
-                ("home_win", prob_home),
-                ("draw", prob_draw),
-                ("away_win", prob_away),
-            ]:
-                if prob is not None and float(prob) > 55:
-                    bets.append({
-                        "type": mtype,
-                        "prob": float(prob) / 100,
-                        "confidence": confidence,
-                        "teams": teams,
-                        "event_date": event_date,
-                    })
+            if prob_over_25 is not None and (100 - float(prob_over_25)) >= 58:
+                bets.append({
+                    "type": "under_2.5",
+                    "prob": (100 - float(prob_over_25)) / 100,
+                    "confidence": confidence,
+                    "teams": teams,
+                    "event_date": event_date,
+                })
+
+            if prob_over_35 is not None and (100 - float(prob_over_35)) >= 58:
+                bets.append({
+                    "type": "under_3.5",
+                    "prob": (100 - float(prob_over_35)) / 100,
+                    "confidence": confidence,
+                    "teams": teams,
+                    "event_date": event_date,
+                })
+
+            if prob_btts_yes is not None and (100 - float(prob_btts_yes)) >= 58:
+                bets.append({
+                    "type": "no_btts",
+                    "prob": (100 - float(prob_btts_yes)) / 100,
+                    "confidence": confidence,
+                    "teams": teams,
+                    "event_date": event_date,
+                })
 
         except (KeyError, TypeError, ValueError):
             continue
