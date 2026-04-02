@@ -19,6 +19,22 @@ def format_date_time(event_date):
         return "N/A", "N/A"
 
 
+def stake_percentage(prob, confidence):
+    quality = float(prob) * float(confidence)
+    if quality >= 0.86:
+        return 7.0
+    elif quality >= 0.82:
+        return 6.0
+    elif quality >= 0.78:
+        return 5.0
+    elif quality >= 0.74:
+        return 4.0
+    elif quality >= 0.70:
+        return 3.0
+    else:
+        return 3.0
+
+
 def format_msg(bet):
     date_str, time_str = format_date_time(bet.get("event_date"))
     return (
@@ -31,12 +47,6 @@ def format_msg(bet):
         f"Confiança da análise: {bet.get('confidence', 0):.2f}\n"
         f"Stake sugerida: {bet.get('stake', 0):.2f}% da banca"
     )
-
-
-def stake_percentage(prob, confidence):
-    base = prob * confidence
-    stake = (base - 0.55) * 10
-    return max(0.75, min(3.0, round(stake, 2)))
 
 
 def main():
