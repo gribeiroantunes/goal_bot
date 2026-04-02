@@ -10,44 +10,21 @@ def get_predictions():
         "Authorization": f"Token {API_KEY}"
     }
 
+    all_preds = []
+    url = f"{BASE_URL}/predictions/?tz=America/Sao_Paulo"
+
     try:
-        response = requests.get(f"{BASE_URL}/predictions/", headers=headers)
-        data = response.json()
+        while url:
+            res = requests.get(url, headers=headers)
+            data = res.json()
+
+            results = data.get("results", [])
+            all_preds.extend(results)
+
+            url = data.get("next")  # 🔥 pega próxima página
+
     except Exception as e:
         print(f"Erro API: {e}")
-        return []
 
-    return data.get("results", [])
-
-
-def get_matches():
-    predictions = get_predictions()
-
-    bets = []
-
-    for p in predictions:
-        try:
-            event = p["event"]
-
-            # 🔥 OVER 2.5
-            if p.get("prob_over_25"):
-                bets.append({
-                    "type": "over_2.5",
-                    "prob": p["prob_over_25"] / 100,
-                    "confidence": p["confidence"],
-                    "teams": f"{event['home_team']} vs {event['away_team']}"
-                })
-
-            # 🔥 BTTS
-            if p.get("prob_btts_yes"):
-                bets.append({
-                    "type": "btts",
-                    "prob": p["prob_btts_yes"] / 100,
-                    "confidence": p["confidence"],
-                    "teams": f"{event['home_team']} vs {event['away_team']}"
-                })
-
-        except:
-            continue
-
-    return bets
+    print(f"Total predictions coletadas: {len(all_preds)}")
+    return all_preds
