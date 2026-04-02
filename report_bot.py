@@ -1,5 +1,3 @@
-# report_bot.py
-
 import os
 import asyncio
 from datetime import datetime, timedelta
@@ -8,30 +6,41 @@ from telegram import Bot
 from history_manager import load_history
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHANNEL_ID = -1003725207734
+CHANNEL_ID = os.getenv("TELEGRAM_CHAT_ID_FREE") or -1003725207734
+
+VIP_LINK = "https://t.me/seu_link_vip_aqui"
+
+
+def parse_date(value):
+    try:
+        return datetime.strptime(value, "%Y-%m-%d")
+    except Exception:
+        return None
 
 
 def last_7_days(data):
     cutoff = datetime.now() - timedelta(days=7)
     return [
         x for x in data
-        if datetime.strptime(x["date"], "%Y-%m-%d") >= cutoff
-        and x["result"] != "pending"
+        if parse_date(x.get("date", "")) is not None
+        and parse_date(x["date"]) >= cutoff
+        and x.get("result") != "pending"
     ]
 
 
 def stats(data):
-    wins = sum(1 for x in data if x["result"] == "win")
-    losses = sum(1 for x in data if x["result"] == "loss")
-
+    wins = sum(1 for x in data if x.get("result") == "win")
+    losses = sum(1 for x in data if x.get("result") == "loss")
     total = wins + losses
     acc = (wins / total * 100) if total > 0 else 0
-    roi = sum(x["ev"] for x in data)
-
+    roi = sum(float(x.get("ev", 0)) for x in data)
     return wins, losses, acc, roi
 
 
 async def main():
+    if not TELEGRAM_TOKEN:
+        raise ValueError("TELEGRAM_TOKEN não encontrado no ambiente")
+
     bot = Bot(token=TELEGRAM_TOKEN)
 
     data = load_history()
@@ -40,13 +49,16 @@ async def main():
     w, l, acc, roi = stats(recent)
 
     msg = (
-        f"📊 RESULTADOS 7 DIAS\n\n"
-        f"✅ {w}W | ❌ {l}L\n"
-        f"📈 {acc:.1f}%\n"
-        f"💰 ROI: {roi:.2f}"
+        f"📊 REPORT DOS ÚLTIMOS 7 DIAS\n\n"
+        f"✅ Wins: {w}\n"
+        f"❌ Losses: {l}\n"
+        f"📈 Assertividade: {acc:.1f}%\n"
+        f"💰 ROI acumulado: {roi:.2f}\n\n"
+        f"🔒 Quer acesso ao VIP?\n"
+        f"{VIP_LINK}"
     )
 
-    await bot.send_message(CHANNEL_ID, msg)
+    await bot.send_message(chat_id=CHANNEL_ID, text=msg)
 
 
 if __name__ == "__main__":
