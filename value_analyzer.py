@@ -1,6 +1,15 @@
 def estimate_odds(prob):
-    margin = 0.08
-    return round((1 / prob) * (1 - margin), 2)
+    # Simulação mais próxima do mercado real
+    if prob >= 0.70:
+        return 1.55
+    elif prob >= 0.65:
+        return 1.65
+    elif prob >= 0.60:
+        return 1.75
+    elif prob >= 0.55:
+        return 1.85
+    else:
+        return 2.00
 
 
 def calculate_ev(prob, odds):
