@@ -2,7 +2,7 @@ name: Daily Goal Tips Bot
 
 on:
   schedule:
-    - cron: '0 12 * * *' # 09:00 Brasil (UTC-3)
+    - cron: '0 12 * * *' # 09:00 São Paulo (UTC-3)
   workflow_dispatch:
 
 jobs:
@@ -39,6 +39,14 @@ jobs:
         run: |
           echo "Estrutura do projeto:"
           ls -R
+
+      - name: 🟡 Rodar REPORT FREE
+        env:
+          TELEGRAM_CHAT_ID_FREE: ${{ secrets.TELEGRAM_CHAT_ID_FREE }}
+          VIP_LINK: ${{ secrets.VIP_LINK }}
+        run: |
+          echo "Iniciando REPORT FREE..."
+          python report_bot.py
 
       - name: 🟢 Rodar BOT FREE
         env:
